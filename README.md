@@ -23,53 +23,53 @@ Train your armies’ battle skills to up the outcome of winning skirmishes.
 - +1d8 to chance for army survival during battles
 
 #### Weapon Upgrade
--
+- +1d10 to Devastate Check
+- +1d10 to Conquer Check
+- +1d8 to Pillage Check
+  
 #### Passive Income
 By default, you gain 100 dollars every turn. However, this can be upgraded.
 - +50 Passive Income
 - Requires 1 territory per upgrade
 
+#### Commander
+By default, the player starts out with no commander. They can hire one through this tree, and upgrade their stats individually. 
+Commanders have a chance to fight opposing commanders during skirmishes. This initiates a manual battle between the 2 commanders, and whoever wins will win the battle with their chosen outcome.
+
 ## Battle
+Player fights their opponent in a skirmish.
 ### Outcome Choice
 A player can choose their goal for the outcome of the battle 
 #### Devastate 
-    Check = 
+    Player can wreak havoc upon their opponent's territory.
         - Opponent loses 1 territory
         - Opponent loses 500-750 dollars
         - Opponent loses an army
+
+    Check =
+    
 #### Conquer
-    Check = 
+    Player conquers their opponent's territory.
         - Opponent loses 1 territory
         - Player gains 1 territory
         - Opponent loses 250-500 dollars
         - Player gains 250-500 dollars 
+    Check =
+    
+#### Pillage 
+    Very low success rate, but player has chance to steal (opponent loses and player gains) 2 of 3 things:
+        - Random Tech Level
+        - 2000-3000 dollars
+        - A hostage army 
+    Check =
 
-#### Pillage
-    Check = 
-Has a very low success rate, but the player has chance to steal (opponent loses and player gains) 2 of 3 things:
-- Random Tech Level
-
-Tech level
-2000-3000 dollars
-A hostage army
+### Weapon Failure
+    The complexity of a player's weapon both helps them in battle but also raises the risk.
+    A player's weapons are capable of failing during battle, which can cause 1 of 3 outcomes: 
+        - Player loses the battle and flees with one less army and a range of cash between 500-1000
+        - Player manages to win by a thread and only have to pay 500-1000 dollars
+        - The battle was devastating. Player loses 1300-2000 dollars, 2 armies, and a weapon tech level 
 ## Pass
-Skirmish Outcomes
-Outcome Choice
-
-Tech Tree System 
-Based on technology stat
-Different branches of technology that affect skirmishes and the outcome of skirmishes 
-Endurance of Armies
-Weapon tech level 
-Raises chance of weapon failure because of complexity but increases your chance of winning in battle
-Training
-Train your armies for a cost to improve battle chance
-Failures
-Weapon Failure
-Weapons fail during battles, which can cause 1 of 3 outcomes:
-You lose the battle and flee with one less army and a range of cash between 500-1000
-You manage to win by a thread and only have to pay 500-1000 dollars
-The battle was devastating. You lose 1300-2000 dollars, 2 armies, and a weapon tech level 
 
 ## List of Chances & Stats
 ### Stats
@@ -96,6 +96,7 @@ The battle was devastating. You lose 1300-2000 dollars, 2 armies, and a weapon t
     - Army Endurance
     - Weapon Failure [-Weapon Complexity]
         - Battle outcome after weapon failure
+            - Amount of money lost in outcome
 # Versions
 ## Version 0.0
 In the works!
