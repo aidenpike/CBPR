@@ -7,7 +7,7 @@ Dice play a primary role in the decision of the battles: upgrades add dice roles
 ## Turn Choices
 
 ### Expand Territories
-10,000 for +1 Territories
+10,000 for +1 Territory
 
 ### Upgrade Technology
 Opens a list of options to upgrade, where each option has different effects.
@@ -32,10 +32,18 @@ By default, you gain 100 dollars every turn. However, this can be upgraded.
 - +50 Passive Income
 - Requires 1 territory per upgrade
 
-#### Commander
-By default, the player starts out with no commander. They can hire one through this tree, and upgrade their stats individually. 
-Commanders have a chance to fight opposing commanders during skirmishes. This initiates a manual battle between the 2 commanders, and whoever wins will win the battle with their chosen outcome.
-
+#### Commander Upgrade
+By default, the player starts out with no commander. They can hire one through this tree, and upgrade their stats individually. Commanders boost the chance of winning skirmishes, and slightly boost morale of the soldiers, increasing the soldier skill stat chance by half of its level.
+Commanders have a chance to fight opposing commanders (if both players have a commander) during skirmishes. This initiates a manual battle between the 2 commanders, and whoever wins will win the battle with their chosen outcome.
+##### Commander Health
+The health of the commander. 
+##### Commander Armor
+The armor of the commander. 
+##### Commander Damage 
+The damage of the commander.
+### Recruit Army
+8000 for +1 Army
+    
 ## Battle
 Player fights their opponent in a skirmish.
 ### Outcome Choice
@@ -80,6 +88,10 @@ A player can choose their goal for the outcome of the battle
     - Army Endurance
     - Weapon Complexity (Weapon Upgrade Level)
     - Passive Income
+    - Commander
+        - Commander Damage
+        - Commander Armor
+        - Commander Health
 - Money
 
 ### Chances [What Affects Them]
