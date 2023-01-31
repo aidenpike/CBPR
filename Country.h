@@ -2,6 +2,7 @@
 
 using std::cout;
 using std::string;
+using std::cin;
 
 //All of the stats and functions excluding commander are here
 //Declaration Section
@@ -10,10 +11,10 @@ class Country {
         Country();
         void getNames();
         //First int = Player number
-        void expandTerritory(int);
-        void upgradeTechnology(int, char);
+        void expandTerritory(int); //+1 Territory, -10,000 dollars
+        void upgradeTechnology(int, char); //Opens up a list of tech branches
         void battleInitiation(int, int); //Second int is for battle outcome choice
-        void pass(int);
+        void pass(int); //Pass your turn
     private:
         //Player One Stats
         string pOneName;
@@ -45,7 +46,6 @@ class Country {
 //Implementation Section
 Country::Country(){ 
     //Public
-    getNames();
     expandTerritory(0);
     upgradeTechnology(0, ' ');
     battleInitiation(0, 0); 
@@ -79,18 +79,25 @@ Country::Country(){
         pTwoCmdrHP = 10;
 }
 
-void expandTerritory(int player){
+void Country::getNames(){
+    cout << "Player one, enter your name: ";
+    getline(cin, pOneName);
+    cout << "Player two, enter your name: ";
+    getline(cin, pTwoName);
+}
+
+void Country::expandTerritory(int player){
 
 }
 
-void upgradeTechnology(int player, char techBranch){
+void Country::upgradeTechnology(int player, char techBranch){
     
 }
 
-void battleInitiation(int player){
+void Country::battleInitiation(int player, int outcomeChoice){
     
 }
 
-void pass(int player){
+void Country::pass(int player){
     
-}Im
+}
