@@ -15,9 +15,9 @@ class Country {
         void upgradeTechnology(int, char); //Opens up a list of tech branches
         void battleInitiation(int, int); //Second int is for battle outcome choice
         void pass(int); //Pass your turn
-    string returnName(int);
-    int returnStats(int);
-
+        void returnStats(int);        
+        string returnName(int);
+    
     private:
         //Player One Stats
         string pOneName;
@@ -27,6 +27,7 @@ class Country {
         int pOneArmyEndurance;
         int pOneWeaponComplexity;
         int pOnePassiveIncome;
+        int pOneMoney;
         //Player One Commander Stats
         int pOneCmdrDmg;
         int pOneCmdrDef;
@@ -40,6 +41,7 @@ class Country {
         int pTwoArmyEndurance;
         int pTwoWeaponComplexity;
         int pTwoPassiveIncome;
+        int pTwoMoney;
         //Player Two Commander Stats
         int pTwoCmdrDmg;
         int pTwoCmdrDef;
@@ -65,6 +67,7 @@ Country::Country(){
         pOneArmyEndurance = 0;
         pOneWeaponComplexity = 0;
         pOnePassiveIncome = 0; 
+        pOneMoney = 0;
         //Player One Commander Stats
         pOneCmdrDmg = 5;
         pOneCmdrDef = 1;
@@ -78,6 +81,7 @@ Country::Country(){
         pTwoArmyEndurance = 0;
         pTwoWeaponComplexity = 0;
         pTwoPassiveIncome = 0; 
+        pTwoMoney = 0;
         //Player Two Commander Stats
         pTwoCmdrDmg = 5;
         pTwoCmdrDef = 1;
@@ -111,6 +115,23 @@ string Country::returnName(int player){
     return (player == 1 && player != 2) ? pOneName : pTwoName; 
 }
 
-int Country::returnStats(int player){
-    return 0;
+void Country::returnStats(int player){
+    if (player == 1){
+        cout               << pOneTerritories      << " Territories\n";
+        cout               << pOneArmies           << " Armies\n";
+        cout << "\tLevel " << pOneArmySkill        << " Army Skill\n";
+        cout << "\tLevel " << pOneArmyEndurance    << " Army Endurance\n";
+        cout << "\tLevel " << pOneWeaponComplexity << " Weapon Complexity\n";
+        cout << "\t      " << pOnePassiveIncome    << " Dollars in passive income\n";
+        cout               << pOneMoney            << " Dollars\n\n\n";
+    }
+    else if (player == 2){
+        cout               << pTwoTerritories      << " Territories\n";
+        cout               << pTwoArmies           << " Armies\n";
+        cout << "\tLevel " << pTwoArmySkill        << " Army Skill\n";
+        cout << "\tLevel " << pTwoArmyEndurance    << " Army Endurance\n";
+        cout << "\tLevel " << pTwoWeaponComplexity << " Weapon Complexity\n";
+        cout << "\t      " << pTwoPassiveIncome    << " Dollars in passive income\n";
+        cout               << pTwoMoney            << " Dollars\n\n\n";
+    }
 }
