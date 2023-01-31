@@ -45,6 +45,12 @@ class Country {
 //Implementation Section
 Country::Country(){ 
     //Public
+    getNames();
+    expandTerritory(0);
+    upgradeTechnology(0, ' ');
+    battleInitiation(0, 0); 
+    pass(0);
+    
     //Private
         //Player One Stats
         pOneName = "";
@@ -87,4 +93,4 @@ void battleInitiation(int player){
 
 void pass(int player){
     
-}
+}Im
