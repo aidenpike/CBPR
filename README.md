@@ -6,7 +6,7 @@ Remastered version of Country Battle Plus.
 Dice play a primary role in the decision of the battles: upgrades add dice roles or lower the requirements for checks. 
 ## Turn Choices
 
-### Expand Territories
+### Expand Territory
 10,000 for +1 Territory
 
 ### Upgrade Technology
