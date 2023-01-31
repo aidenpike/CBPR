@@ -1,12 +1,11 @@
 #include <iostream>
-#include "Stats.cpp"
+#include "Country.h"
 
 using namespace std;
 
 int main() {
     //Object Declaration
-    Stats stats;
+    Country country;
 
-    //Get Name
-    cout << stats.namePlOne();
+    cout << "test" << endl;
 }
