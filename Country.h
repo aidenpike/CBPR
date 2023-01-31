@@ -15,6 +15,9 @@ class Country {
         void upgradeTechnology(int, char); //Opens up a list of tech branches
         void battleInitiation(int, int); //Second int is for battle outcome choice
         void pass(int); //Pass your turn
+    string returnName(int);
+    int returnStats(int);
+
     private:
         //Player One Stats
         string pOneName;
@@ -46,6 +49,8 @@ class Country {
 //Implementation Section
 Country::Country(){ 
     //Public
+    returnName(0);
+    returnStats(0);
     expandTerritory(0);
     upgradeTechnology(0, ' ');
     battleInitiation(0, 0); 
@@ -87,7 +92,7 @@ void Country::getNames(){
 }
 
 void Country::expandTerritory(int player){
-
+    
 }
 
 void Country::upgradeTechnology(int player, char techBranch){
@@ -100,4 +105,12 @@ void Country::battleInitiation(int player, int outcomeChoice){
 
 void Country::pass(int player){
     
+}
+
+string Country::returnName(int player){
+    return (player == 1 && player != 2) ? pOneName : pTwoName; 
+}
+
+int Country::returnStats(int player){
+    return 0;
 }
