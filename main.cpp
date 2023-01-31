@@ -7,5 +7,15 @@ int main() {
     //Object Declaration
     Country country;
 
-    cout << "test" << endl;
+    //Variables
+    int input;
+    char techChoice;
+    
+    //Title Screen
+    cout << "Welcome to Country Battle Plus: Remastered.\n";
+    country.getNames();
+
+    //Game
+    cout << country.returnName(1) << ", you have: ";
+    cout << country.returnName(2) << ", you have: ";
 }
