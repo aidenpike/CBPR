@@ -12,10 +12,12 @@ class Country {
         void getNames();
         //First int = Player number
         void expandTerritory(int); //+1 Territory, -10,000 dollars
-        void upgradeTechnology(int, char); //Opens up a list of tech branches
+        void upgradeTechnology(int); //Opens up a list of tech branches
+        void recruitArmy(int);
         void battleInitiation(int, int); //Second int is for battle outcome choice
         void pass(int); //Pass your turn
-        void returnStats(int);        
+        void returnStats(int); 
+        void playerChoice(int, int);
         string returnName(int);
         bool hasWon();
 
@@ -55,7 +57,9 @@ Country::Country(){
     returnName(0);
     returnStats(0);
     expandTerritory(0);
-    upgradeTechnology(0, ' ');
+    playerChoice(0,0);
+    upgradeTechnology(0);
+    recruitArmy(0);
     battleInitiation(0, 0); 
     pass(0);
     
@@ -63,12 +67,12 @@ Country::Country(){
         //Player One Stats
         pOneName = "";
         pOneTerritories = 1;
-        pOneArmies = 0;
-        pOneArmySkill = 0;
-        pOneArmyEndurance = 0;
-        pOneWeaponComplexity = 0;
-        pOnePassiveIncome = 0; 
-        pOneMoney = 0;
+        pOneArmies = 10;
+        pOneArmySkill = 1;
+        pOneArmyEndurance = 1;
+        pOneWeaponComplexity = 1;
+        pOnePassiveIncome = 100; 
+        pOneMoney = 50000;
         //Player One Commander Stats
         pOneCmdrDmg = 5;
         pOneCmdrDef = 1;
@@ -77,17 +81,20 @@ Country::Country(){
         //Player Two Stats
         pTwoName = "";
         pTwoTerritories = 1;
-        pTwoArmies = 0;
-        pTwoArmySkill = 0;
-        pTwoArmyEndurance = 0;
-        pTwoWeaponComplexity = 0;
-        pTwoPassiveIncome = 0; 
-        pTwoMoney = 0;
+        pTwoArmies = 10;
+        pTwoArmySkill = 1;
+        pTwoArmyEndurance = 1;
+        pTwoWeaponComplexity = 1;
+        pTwoPassiveIncome = 100; 
+        pTwoMoney = 50000;
         //Player Two Commander Stats
         pTwoCmdrDmg = 5;
         pTwoCmdrDef = 1;
         pTwoCmdrHP = 10;
 }
+
+int outcomeChoice = 0;
+char techBranch = ' ';
 
 void Country::getNames(){
     cout << "Player one, enter your name: ";
@@ -98,11 +105,14 @@ void Country::getNames(){
 
 void Country::expandTerritory(int player){
     if (player == 1){
-        
+        if (pOneMoney >= 10000){
+            pOneMoney -= 10000;
+            pOneTerritories++;
+        }
     }
 }
 
-void Country::upgradeTechnology(int player, char techBranch){
+void Country::upgradeTechnology(int player){
     
 }
 
@@ -187,3 +197,44 @@ bool Country::hasWon(){
     else
         return false;
 }
+
+void techList(){
+    cout << "[A] Army Skill\n";
+    cout << "[B] Army Endurance\n";
+    cout << "[C] Weapon Upgrade\n";
+    cout << "[D] Buy Commander\n";
+        cout << "\t[E] Commander Health\n";
+        cout << "\t[F] Commander Armor\n";
+        cout << "\t[G] Commander Damage\n";
+}
+void Country::playerChoice(int player, int choice){
+        switch (choice){
+            case 1:
+                expandTerritory(player);
+            break;
+                
+            case 2:
+                cout << "Which technology would you like to upgrade?\n";
+                techList();
+                cin >> techBranch;
+                upgradeTechnology(player); 
+            break;
+
+            case 3:
+                recruitArmy(player);
+            break;
+
+            case 4:
+                cout << "What is your goal for battle?\n";
+                cout << "1. Devastate\n";
+                cout << "2. Conquer\n";
+                cout << "3. Pillage\n";
+                cin >> outcomeChoice;
+                battleInitiation(player, outcomeChoice);
+            break;
+
+            case 5:
+                pass(player);
+            break;
+        }
+    }
