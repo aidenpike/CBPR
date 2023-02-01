@@ -106,13 +106,33 @@ void Country::getNames(){
 void Country::expandTerritory(int player){
     if (player == 1){
         if (pOneMoney >= 10000){
-            pOneMoney -= 10000;
+            pOneMoney = pOneMoney - 10000;
             pOneTerritories++;
         }
+        else if (pOneMoney < 10000){
+            cout << "You don't have enough money!\n\n";
+        }
+    }
+    else {
+        if (pTwoMoney >= 10000){
+            pTwoMoney = pTwoMoney - 10000;
+            pTwoTerritories++;
+        }
+        else if (pTwoMoney < 10000){
+            cout << "You don't have enough money!\n\n";
+        }
+    }
+
+    if (player == 0){
+        cout << "test\n";
     }
 }
 
 void Country::upgradeTechnology(int player){
+    
+}
+
+void Country::recruitArmy(int player){
     
 }
 
@@ -159,9 +179,9 @@ bool Country::hasWon(){
         cout << returnName(1) << " has fully conquered " << returnName(2) << std::endl;
         return true;
     }
-    else
+    else {
         return false;
-
+    }
     //Elimination
     if (pOneTerritories <= 0 && pOneArmies <= 0){
         cout << returnName(1) << " has been eliminated.\n";  
@@ -171,8 +191,9 @@ bool Country::hasWon(){
         cout << returnName(2) << " has been eliminated.\n";  
         return true;
     }
-    else
+    else {
         return false;
+    }
 
     //Obliteration
     if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
@@ -183,19 +204,20 @@ bool Country::hasWon(){
         cout << returnName(2) << " has been obliterated.\n";  
         return true;
     }
-    else
+    else {
         return false;
-
+    }
     //Devastation
-    if (pOneTerritories <= 0){
+    if (pOneMoney == 0){
         cout << returnName(2) << " has devastated " << returnName(1);
         return true;
     }
-    else if (pTwoTerritories <= 0){
+    else if (pTwoMoney <= 0){
         cout << returnName(1) << " has devastated " << returnName(2) << std::endl;
     }
-    else
+    else {
         return false;
+    }
 }
 
 void techList(){
@@ -208,33 +230,33 @@ void techList(){
         cout << "\t[G] Commander Damage\n";
 }
 void Country::playerChoice(int player, int choice){
-        switch (choice){
-            case 1:
-                expandTerritory(player);
-            break;
-                
-            case 2:
-                cout << "Which technology would you like to upgrade?\n";
-                techList();
-                cin >> techBranch;
-                upgradeTechnology(player); 
-            break;
+    switch (choice){
+        case 1:
+            expandTerritory(0);
+        break;
+            
+        case 2:
+            cout << "Which technology would you like to upgrade?\n";
+            techList();
+            cin >> techBranch;
+            upgradeTechnology(player); 
+        break;
 
-            case 3:
-                recruitArmy(player);
-            break;
+        case 3:
+            recruitArmy(player);
+        break;
 
-            case 4:
-                cout << "What is your goal for battle?\n";
-                cout << "1. Devastate\n";
-                cout << "2. Conquer\n";
-                cout << "3. Pillage\n";
-                cin >> outcomeChoice;
-                battleInitiation(player, outcomeChoice);
-            break;
+        case 4:
+            cout << "What is your goal for battle?\n";
+            cout << "1. Devastate\n";
+            cout << "2. Conquer\n";
+            cout << "3. Pillage\n";
+            cin >> outcomeChoice;
+            battleInitiation(player, outcomeChoice);
+        break;
 
-            case 5:
-                pass(player);
-            break;
-        }
+        case 5:
+            pass(player);
+        break;
     }
+}
