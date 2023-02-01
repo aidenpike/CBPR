@@ -17,7 +17,8 @@ class Country {
         void pass(int); //Pass your turn
         void returnStats(int);        
         string returnName(int);
-    
+        bool hasWon();
+
     private:
         //Player One Stats
         string pOneName;
@@ -61,7 +62,7 @@ Country::Country(){
     //Private
         //Player One Stats
         pOneName = "";
-        pOneTerritories = 0;
+        pOneTerritories = 1;
         pOneArmies = 0;
         pOneArmySkill = 0;
         pOneArmyEndurance = 0;
@@ -75,7 +76,7 @@ Country::Country(){
 
         //Player Two Stats
         pTwoName = "";
-        pTwoTerritories = 0;
+        pTwoTerritories = 1;
         pTwoArmies = 0;
         pTwoArmySkill = 0;
         pTwoArmyEndurance = 0;
@@ -96,7 +97,9 @@ void Country::getNames(){
 }
 
 void Country::expandTerritory(int player){
-    
+    if (player == 1){
+        
+    }
 }
 
 void Country::upgradeTechnology(int player, char techBranch){
@@ -117,21 +120,70 @@ string Country::returnName(int player){
 
 void Country::returnStats(int player){
     if (player == 1){
-        cout               << pOneTerritories      << " Territories\n";
-        cout               << pOneArmies           << " Armies\n";
+        cout << "\t      " << pOneTerritories      << " Territories\n";
+        cout << "\t      " << pOneArmies           << " Armies\n";
         cout << "\tLevel " << pOneArmySkill        << " Army Skill\n";
         cout << "\tLevel " << pOneArmyEndurance    << " Army Endurance\n";
         cout << "\tLevel " << pOneWeaponComplexity << " Weapon Complexity\n";
         cout << "\t      " << pOnePassiveIncome    << " Dollars in passive income\n";
-        cout               << pOneMoney            << " Dollars\n\n\n";
+        cout << "\t      " << pOneMoney            << " Dollars\n\n\n";
     }
     else if (player == 2){
-        cout               << pTwoTerritories      << " Territories\n";
-        cout               << pTwoArmies           << " Armies\n";
+        cout << "\t      " << pTwoTerritories      << " Territories\n";
+        cout << "\t      " << pTwoArmies           << " Armies\n";
         cout << "\tLevel " << pTwoArmySkill        << " Army Skill\n";
         cout << "\tLevel " << pTwoArmyEndurance    << " Army Endurance\n";
         cout << "\tLevel " << pTwoWeaponComplexity << " Weapon Complexity\n";
         cout << "\t      " << pTwoPassiveIncome    << " Dollars in passive income\n";
-        cout               << pTwoMoney            << " Dollars\n\n\n";
+        cout << "\t      " << pTwoMoney            << " Dollars\n\n\n";
     }
+}
+
+bool Country::hasWon(){
+    //Conquer
+    if (pOneTerritories <= 0){
+        cout << returnName(2) << " has fully conquered " << returnName(1);
+        return true;
+    }
+    else if (pTwoTerritories <= 0){
+        cout << returnName(1) << " has fully conquered " << returnName(2) << std::endl;
+        return true;
+    }
+    else
+        return false;
+
+    //Elimination
+    if (pOneTerritories <= 0 && pOneArmies <= 0){
+        cout << returnName(1) << " has been eliminated.\n";  
+        return true;
+    }
+    else if (pTwoTerritories <= 0 && pTwoArmies <= 0){
+        cout << returnName(2) << " has been eliminated.\n";  
+        return true;
+    }
+    else
+        return false;
+
+    //Obliteration
+    if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
+        cout << returnName(1) << " has been obliterated.\n";  
+        return true;
+    }
+    else if (pTwoTerritories <= 0 && pTwoArmies <= 0 && pOneMoney <= 0){
+        cout << returnName(2) << " has been obliterated.\n";  
+        return true;
+    }
+    else
+        return false;
+
+    //Devastation
+    if (pOneTerritories <= 0){
+        cout << returnName(2) << " has devastated " << returnName(1);
+        return true;
+    }
+    else if (pTwoTerritories <= 0){
+        cout << returnName(1) << " has devastated " << returnName(2) << std::endl;
+    }
+    else
+        return false;
 }
