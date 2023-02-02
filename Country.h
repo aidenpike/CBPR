@@ -12,7 +12,7 @@ class Country {
         void getNames();
         //First int = Player number
         void expandTerritory(int); //+1 Territory, -10,000 dollars
-        void upgradeTechnology(int); //Opens up a list of tech branches
+        void upgradeTechnology(int, char); //Opens up a list of tech branches
         void recruitArmy(int);
         void battleInitiation(int, int); //Second int is for battle outcome choice
         void pass(int); //Pass your turn
@@ -58,7 +58,7 @@ Country::Country(){
     returnStats(0);
     expandTerritory(0);
     playerChoice(0,0);
-    upgradeTechnology(0);
+    upgradeTechnology(0, ' ');
     recruitArmy(0);
     battleInitiation(0, 0); 
     pass(0);
@@ -71,7 +71,7 @@ Country::Country(){
         pOneArmySkill = 1;
         pOneArmyEndurance = 1;
         pOneWeaponComplexity = 1;
-        pOnePassiveIncome = 100; 
+        pOnePassiveIncome = 1; 
         pOneMoney = 50000;
         //Player One Commander Stats
         pOneCmdrDmg = 5;
@@ -85,7 +85,7 @@ Country::Country(){
         pTwoArmySkill = 1;
         pTwoArmyEndurance = 1;
         pTwoWeaponComplexity = 1;
-        pTwoPassiveIncome = 100; 
+        pTwoPassiveIncome = 1; 
         pTwoMoney = 50000;
         //Player Two Commander Stats
         pTwoCmdrDmg = 5;
@@ -94,7 +94,6 @@ Country::Country(){
 }
 
 int outcomeChoice = 0;
-char techBranch = ' ';
 
 void Country::getNames(){
     cout << "Player one, enter your name: ";
@@ -103,31 +102,138 @@ void Country::getNames(){
     getline(cin, pTwoName);
 }
 
+//Expand your territories 
 void Country::expandTerritory(int player){
+    int territoryPrice = 10000;
+    
     if (player == 1){
-        if (pOneMoney >= 10000){
-            pOneMoney -= 10000;
+        if (pOneMoney >= territoryPrice){
+            pOneMoney -= territoryPrice;
             pOneTerritories++;
         }
-        else if (pOneMoney < 10000){
+        else if (pOneMoney < territoryPrice){
             cout << "You don't have enough money!\n\n";
         }
     }
     else if (player == 2) {
-        if (pTwoMoney >= 10000){
-            pTwoMoney -= 10000;
+        if (pTwoMoney >= territoryPrice){
+            pTwoMoney -= territoryPrice;
             pTwoTerritories++;
         }
-        else if (pTwoMoney < 10000){
+        else if (pTwoMoney < territoryPrice){
             cout << "You don't have enough money!\n\n";
         }
     }
 }
 
-void Country::upgradeTechnology(int player){
-    
+//List out all of the technologies you can upgrade
+void techList(){
+    cout << "[A] Army Skill\n";
+    cout << "[B] Army Endurance\n";
+    cout << "[C] Weapon Upgrade\n";
+    cout << "[D] Buy Commander\n";
+    cout << "\t[E] Commander Health\n";
+    cout << "\t[F] Commander Armor\n";
+    cout << "\t[G] Commander Damage\n";
+    cout << "[H] Passive Income\n";
 }
 
+void Country::upgradeTechnology(int player, char techBranch){
+    int techPrice = 8000;
+    
+    if (player == 1 && pOneMoney >= techPrice){
+        cout << "Which technology would you like to upgrade?\n";
+        techList();
+        cin >> techBranch;
+    
+        techBranch = toupper(techBranch);
+        
+        switch (techBranch){
+            //Army Skill
+            case 'A':
+                cout << "After a long day, your armies' training is done. It pays off and their skill gains one level!\n\n";
+                pOneArmySkill++;
+                pOneMoney -= techPrice;
+            break;
+
+            //Army Endurance
+            case 'B':
+                cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains one level!\n\n";
+                pOneArmyEndurance++;
+                pOneMoney -= techPrice;
+            break;
+
+            //Weapon Complexity
+            case 'C': 
+                cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
+                pOneWeaponComplexity++;
+                pOneMoney -= techPrice;
+            break;
+
+            //Commander Purchase. Will work on this later
+            case 'D':
+                cout << "In the works.\n\n";
+            break; 
+
+            case 'H':
+                if (pOnePassiveIncome <= pOneTerritories){
+                    cout << "You add more mines to your territories.\n\n";
+                    pOnePassiveIncome++;
+                    pOneMoney -= techPrice;
+                }
+                else if (pOnePassiveIncome > pOneTerritories){
+                    cout << "Not enough territories to add mines to!\n\n";
+                    pOnePassiveIncome = pOneTerritories;
+                }
+        }
+    }
+    else if (player == 2 && pTwoMoney >= techPrice){
+        cout << "Which technology would you like to upgrade?\n";
+        techList();
+        cin >> techBranch;
+    
+        techBranch = toupper(techBranch);
+        
+        switch (techBranch){
+            //Army Skill
+            case 'A':
+                cout << "After a long day, your armies' training is done. It pays off and their skill gains one level!\n\n";
+                pTwoArmySkill++;
+                pTwoMoney -= techPrice;
+            break;
+
+            //Army Endurance
+            case 'B':
+                cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains one level!\n\n";
+                pTwoArmyEndurance++;
+                pTwoMoney -= techPrice;
+            break;
+
+            //Weapon Complexity
+            case 'C': 
+                cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
+                pTwoWeaponComplexity++;
+                pTwoMoney -= techPrice;
+            break;
+
+            //Commander Purchase. Will work on this later
+            case 'D':
+                cout << "In the works.\n\n";
+            break; 
+
+            case 'H':
+                if (pTwoPassiveIncome <= pTwoTerritories){
+                    cout << "You add more mines to your territories.\n\n";
+                    pTwoPassiveIncome++;
+                    pTwoMoney -= techPrice;
+                }
+                else if (pTwoPassiveIncome > pTwoTerritories){
+                    cout << "Not enough territories to add mines to!\n\n";
+                    pTwoPassiveIncome = pTwoTerritories;
+                }
+        }
+    }
+}
 void Country::recruitArmy(int player){
     
 }
@@ -146,22 +252,22 @@ string Country::returnName(int player){
 
 void Country::returnStats(int player){
     if (player == 1){
-        cout << "\t      " << pOneTerritories      << " Territories\n";
-        cout << "\t      " << pOneArmies           << " Armies\n";
-        cout << "\tLevel " << pOneArmySkill        << " Army Skill\n";
-        cout << "\tLevel " << pOneArmyEndurance    << " Army Endurance\n";
-        cout << "\tLevel " << pOneWeaponComplexity << " Weapon Complexity\n";
-        cout << "\t      " << pOnePassiveIncome    << " Dollars in passive income\n";
-        cout << "\t      " << pOneMoney            << " Dollars\n\n\n";
+        cout << "\t      " << pOneTerritories         << " Territories\n";
+        cout << "\t      " << pOneArmies              << " Armies\n";
+        cout << "\tLevel " << pOneArmySkill           << " Army Skill\n";
+        cout << "\tLevel " << pOneArmyEndurance       << " Army Endurance\n";
+        cout << "\tLevel " << pOneWeaponComplexity    << " Weapon Complexity\n";
+        cout << "\t      " << pOnePassiveIncome * 100 << " Dollars in passive income\n";
+        cout << "\t      " << pOneMoney               << " Dollars\n\n\n";
     }
     else if (player == 2){
-        cout << "\t      " << pTwoTerritories      << " Territories\n";
-        cout << "\t      " << pTwoArmies           << " Armies\n";
-        cout << "\tLevel " << pTwoArmySkill        << " Army Skill\n";
-        cout << "\tLevel " << pTwoArmyEndurance    << " Army Endurance\n";
-        cout << "\tLevel " << pTwoWeaponComplexity << " Weapon Complexity\n";
-        cout << "\t      " << pTwoPassiveIncome    << " Dollars in passive income\n";
-        cout << "\t      " << pTwoMoney            << " Dollars\n\n\n";
+        cout << "\t      " << pTwoTerritories         << " Territories\n";
+        cout << "\t      " << pTwoArmies              << " Armies\n";
+        cout << "\tLevel " << pTwoArmySkill           << " Army Skill\n";
+        cout << "\tLevel " << pTwoArmyEndurance       << " Army Endurance\n";
+        cout << "\tLevel " << pTwoWeaponComplexity    << " Weapon Complexity\n";
+        cout << "\t      " << pTwoPassiveIncome * 100 << " Dollars in passive income\n";
+        cout << "\t      " << pTwoMoney               << " Dollars\n\n\n";
     }
 }
 
@@ -222,15 +328,6 @@ bool Country::hasWon(){
         return false;
 }
 
-void techList(){
-    cout << "[A] Army Skill\n";
-    cout << "[B] Army Endurance\n";
-    cout << "[C] Weapon Upgrade\n";
-    cout << "[D] Buy Commander\n";
-        cout << "\t[E] Commander Health\n";
-        cout << "\t[F] Commander Armor\n";
-        cout << "\t[G] Commander Damage\n";
-}
 void Country::playerChoice(int player, int choice){
     switch (choice){
         case 1:
@@ -238,10 +335,7 @@ void Country::playerChoice(int player, int choice){
         break;
             
         case 2:
-            cout << "Which technology would you like to upgrade?\n";
-            techList();
-            cin >> techBranch;
-            upgradeTechnology(player); 
+            upgradeTechnology(player, ' '); 
         break;
 
         case 3:
@@ -255,10 +349,6 @@ void Country::playerChoice(int player, int choice){
             cout << "3. Pillage\n";
             cin >> outcomeChoice;
             battleInitiation(player, outcomeChoice);
-        break;
-
-        case 5:
-            pass(player);
-        break;
+        break;  
     }
 }
