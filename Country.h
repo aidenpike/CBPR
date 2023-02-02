@@ -187,6 +187,8 @@ void Country::upgradeTechnology(int player, char techBranch){
                 }
         }
     }
+    else if (player == 1 && pOneMoney < 8000)
+        cout << "Not enough money to upgrade a technology!\n";
     else if (player == 2 && pTwoMoney >= techPrice){
         cout << "Which technology would you like to upgrade?\n";
         techList();
@@ -233,9 +235,19 @@ void Country::upgradeTechnology(int player, char techBranch){
                 }
         }
     }
+    else if (player == 2 && pTwoMoney < 8000)
+        cout << "Not enough money to upgrade a technology!\n";
 }
 void Country::recruitArmy(int player){
-    
+    int armyPrice = 8000;
+
+    if (player == 1 && pOneMoney >= 8000){
+        cout << "A new army is hired.\n";
+        pOneArmies++;
+        pOneMoney -= armyPrice;
+    } 
+    else if (player == 1 && pOneMoney < 8000)
+        cout << "Not enough money to recruit another army!\n";
 }
 
 void Country::battleInitiation(int player, int outcomeChoice){
