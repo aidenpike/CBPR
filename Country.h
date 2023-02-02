@@ -133,7 +133,7 @@ void Country::recruitArmy(int player){
 }
 
 void Country::battleInitiation(int player, int outcomeChoice){
-    
+    pOneArmies = 0, pOneTerritories = 0, pOneMoney = 0;
 }
 
 void Country::pass(int player){
@@ -166,54 +166,60 @@ void Country::returnStats(int player){
 }
 
 bool Country::hasWon(){
+    bool check = false;
+    
     //Conquer
     if (pOneTerritories <= 0){
-        cout << returnName(2) << " has fully conquered " << returnName(1);
+        cout << returnName(2) << " has fully conquered " << returnName(1) << "." << std::endl;
         return true;
     }
     else if (pTwoTerritories <= 0){
-        cout << returnName(1) << " has fully conquered " << returnName(2) << std::endl;
-        return true;
+        cout << returnName(1) << " has fully conquered " << returnName(2) << "." << std::endl;
+        check = true;
     }
-    else {
-        return false;
-    }
+    else 
+        check = false;
+    
     //Elimination
     if (pOneTerritories <= 0 && pOneArmies <= 0){
         cout << returnName(1) << " has been eliminated.\n";  
-        return true;
+        check = true;
     }
     else if (pTwoTerritories <= 0 && pTwoArmies <= 0){
         cout << returnName(2) << " has been eliminated.\n";  
-        return true;
+        check = true;
     }
-    else {
-        return false;
-    }
+    else 
+        check = false;
 
     //Obliteration
     if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
         cout << returnName(1) << " has been obliterated.\n";  
-        return true;
+        check = true;
     }
     else if (pTwoTerritories <= 0 && pTwoArmies <= 0 && pOneMoney <= 0){
         cout << returnName(2) << " has been obliterated.\n";  
-        return true;
+        check = true;
     }
-    else {
-        return false;
-    }
+    else
+        check = false;
     //Devastation
     if (pOneMoney == 0){
-        cout << returnName(2) << " has devastated " << returnName(1);
-        return true;
+        cout << returnName(2) << " has fully devastated " << returnName(1) << std::endl;
+        check = true;
     }
     else if (pTwoMoney <= 0){
-        cout << returnName(1) << " has devastated " << returnName(2) << std::endl;
+        cout << returnName(1) << " has fully devastated " << returnName(2) << std::endl;
+        check = true;
     }
-    else {
+    else
+        check = false;
+    
+
+    if (check)
+        return true;
+    else if (!check)
         return false;
-    }
 }
 
 void techList(){
@@ -228,7 +234,7 @@ void techList(){
 void Country::playerChoice(int player, int choice){
     switch (choice){
         case 1:
-            expandTerritory(0);
+            expandTerritory(player);
         break;
             
         case 2:
