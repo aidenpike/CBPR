@@ -18,32 +18,26 @@ int main() {
     //Variables
     int input = 0;
     char techChoice;
-    bool hasWon = false;
     
     //Title Screen
     cout << "Welcome to Country Battle Plus: Remastered.\n";
     country.getNames();
     cout << endl;
     
-    //Game
-    do {
-        bool hasWon = country.hasWon();
-        
+    //Game Loop
+    while (country.hasWon() == false) {
         cout << country.returnName(1) << ", you have:\n";
         country.returnStats(1);
         cout << "It is your turn, what do you wish to do " << country.returnName(1) << "?\n";
         choiceList();
         cin >> input;
         country.playerChoice(1, input);
-
-        input = 0;
         
         cout << country.returnName(2) << ", you have:\n";
         country.returnStats(2);
         cout << "It is your turn, what do you wish to do " << country.returnName(2) << "?\n";
         choiceList();
         cin >> input;
-        country.playerChoice(2, input);
-        
-    } while (!hasWon);
+        country.playerChoice(2, input);  
+    }
 }
