@@ -106,25 +106,21 @@ void Country::getNames(){
 void Country::expandTerritory(int player){
     if (player == 1){
         if (pOneMoney >= 10000){
-            pOneMoney = pOneMoney - 10000;
+            pOneMoney -= 10000;
             pOneTerritories++;
         }
         else if (pOneMoney < 10000){
             cout << "You don't have enough money!\n\n";
         }
     }
-    else {
+    else if (player == 2) {
         if (pTwoMoney >= 10000){
-            pTwoMoney = pTwoMoney - 10000;
+            pTwoMoney -= 10000;
             pTwoTerritories++;
         }
         else if (pTwoMoney < 10000){
             cout << "You don't have enough money!\n\n";
         }
-    }
-
-    if (player == 0){
-        cout << "test\n";
     }
 }
 
