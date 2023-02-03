@@ -53,8 +53,6 @@ A player can choose their goal for the outcome of the battle
         - Opponent loses 1 territory
         - Opponent loses 500-750 dollars
         - Opponent loses an army
-
-    Check =
     
 #### Conquer
     Player conquers their opponent's territory.
@@ -62,14 +60,6 @@ A player can choose their goal for the outcome of the battle
         - Player gains 1 territory
         - Opponent loses 250-500 dollars
         - Player gains 250-500 dollars 
-    Check =
-    
-#### Pillage 
-    Very low success rate, but player has chance to steal (opponent loses and player gains) 2 of 3 things:
-        - Random Tech Level
-        - 2000-3000 dollars
-        - A hostage army 
-    Check =
 
 ### Weapon Failure
     The complexity of a player's weapon both helps them in battle but also raises the risk.
@@ -101,10 +91,6 @@ A player can choose their goal for the outcome of the battle
     - Conquer Chance [+Army Skill, +Army Endurance, +Weapon Complexity, -Weapon Failure]
         - Amount of money lost to conquer for opponent
         - Amount of money gained from conquer for player
-    - Pillage Chance [+Army Skill, +Army Endurance, +Commander Strategy, +Weapon Complexity, -Weapon Failure]
-        - Chance of which 2 of 3 outcomes occur
-            - Chance of what branch of technology is stolen
-            - Amount of money lost to pillage for opponent 
     - Army Endurance
     - Weapon Failure [-Weapon Complexity]
         - Battle outcome after weapon failure
