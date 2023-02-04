@@ -98,3 +98,27 @@ A player can choose their goal for the outcome of the battle
 # Versions
 ## Version 0.0
 In the works!
+
+### To Do
+- passiveIncome()
+- Tech upgrade price scaling 
+- weaponFailure()
+- Commander Class
+    - Likely one function for level up that ups the stats each level
+    - cmdrBattle()
+    - Commander Stats
+        - p[One or Two]CmdrLevel
+        - p[One or Two]CmdrATK
+        - p[One or Two]CmdrDEF
+        - p[One or Two]CmdrMOR
+
+### Ideas
+- choiceList() specific to what the player has
+- Capital
+    - Manage Capital Choice
+    - Artillery 
+    - Ability to storm territory with enemy capital
+    - Grand Buildings - Dedicated buildings that have numerous boosts and multipliers to your stats (also they're very expensive)
+        - Grand Science Building - Weapon failure chance reduced by half
+        - Grand Barracks - .5 levels added per Army Skill, chance for 2 armies to be recruited
+        - Grand Mine - .5 levels added per Passive Income, bonus 1000 passive income
