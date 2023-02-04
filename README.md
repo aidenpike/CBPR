@@ -111,6 +111,7 @@ In the works!
         - p[One or Two]CmdrATK
         - p[One or Two]CmdrDEF
         - p[One or Two]CmdrMOR
+- Fix conquer as only win issue 
 
 ### Ideas
 - choiceList() specific to what the player has
