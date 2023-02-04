@@ -20,6 +20,7 @@ class Country {
         void playerChoice(int, int);
         string returnName(int);
         bool hasWon();
+        void passiveIncome(int);
 
     private:
         //Player One Stats
@@ -61,6 +62,7 @@ Country::Country(){
     upgradeTechnology(0, ' ');
     recruitArmy(0);
     battleInitiation(0);
+    passiveIncome(0);
     
     //Private
         //Player One Stats
@@ -70,7 +72,7 @@ Country::Country(){
         pOneArmySkill = 1;
         pOneArmyEndurance = 1;
         pOneWeaponComplexity = 1;
-        pOnePassiveIncome = 1; 
+        pOnePassiveIncome = 0; 
         pOneMoney = 50000;
         //Player One Commander Stats
         pOneCmdrDmg = 5;
@@ -84,7 +86,7 @@ Country::Country(){
         pTwoArmySkill = 1;
         pTwoArmyEndurance = 1;
         pTwoWeaponComplexity = 1;
-        pTwoPassiveIncome = 1; 
+        pTwoPassiveIncome = 0; 
         pTwoMoney = 50000;
         //Player Two Commander Stats
         pTwoCmdrDmg = 5;
@@ -365,22 +367,22 @@ string Country::returnName(int player){
 
 void Country::returnStats(int player){
     if (player == 1){
-        cout << "\t      " << pOneTerritories         << " Territories\n";
-        cout << "\t      " << pOneArmies              << " Armies\n";
-        cout << "\tLevel " << pOneArmySkill           << " Army Skill\n";
-        cout << "\tLevel " << pOneArmyEndurance       << " Army Endurance\n";
-        cout << "\tLevel " << pOneWeaponComplexity    << " Weapon Complexity\n";
-        cout << "\t      " << pOnePassiveIncome * 100 << " Dollars in passive income\n";
-        cout << "\t      " << pOneMoney               << " Dollars\n\n\n";
+        cout << "\t      " << pOneTerritories              << " Territories\n";
+        cout << "\t      " << pOneArmies                   << " Armies\n";
+        cout << "\tLevel " << pOneArmySkill                << " Army Skill\n";
+        cout << "\tLevel " << pOneArmyEndurance            << " Army Endurance\n";
+        cout << "\tLevel " << pOneWeaponComplexity         << " Weapon Complexity\n";
+        cout << "\t      " << pOnePassiveIncome * 50 + 100 << " Dollars in passive income\n";
+        cout << "\t      " << pOneMoney                    << " Dollars\n\n\n";
     }
     else if (player == 2){
-        cout << "\t      " << pTwoTerritories         << " Territories\n";
-        cout << "\t      " << pTwoArmies              << " Armies\n";
-        cout << "\tLevel " << pTwoArmySkill           << " Army Skill\n";
-        cout << "\tLevel " << pTwoArmyEndurance       << " Army Endurance\n";
-        cout << "\tLevel " << pTwoWeaponComplexity    << " Weapon Complexity\n";
-        cout << "\t      " << pTwoPassiveIncome * 100 << " Dollars in passive income\n";
-        cout << "\t      " << pTwoMoney               << " Dollars\n\n\n";
+        cout << "\t      " << pTwoTerritories              << " Territories\n";
+        cout << "\t      " << pTwoArmies                   << " Armies\n";
+        cout << "\tLevel " << pTwoArmySkill                << " Army Skill\n";
+        cout << "\tLevel " << pTwoArmyEndurance            << " Army Endurance\n";
+        cout << "\tLevel " << pTwoWeaponComplexity         << " Weapon Complexity\n";
+        cout << "\t      " << pTwoPassiveIncome * 50 + 100 << " Dollars in passive income\n";
+        cout << "\t      " << pTwoMoney                    << " Dollars\n\n\n";
     }
 }
 
@@ -391,6 +393,7 @@ bool Country::hasWon(){
     if (pOneTerritories <= 0){
         cout << returnName(2) << " has fully conquered " << returnName(1) << "." << std::endl;
         check = true;
+        exit(0);
     }
     else if (pTwoTerritories <= 0){
         cout << returnName(1) << " has fully conquered " << returnName(2) << "." << std::endl;
@@ -463,5 +466,14 @@ void Country::playerChoice(int player, int choice){
             cin >> outcomeChoice;
             battleInitiation(player);
         break;  
+    }
+}
+
+void Country::passiveIncome(int player){
+    if (player == 1 && pOnePassiveIncome <= pOneTerritories){
+        pOneMoney += 100 + 50 * pOnePassiveIncome;
+    }
+    else if (player == 2 && pTwoPassiveIncome <= pOneTerritories){
+        pTwoMoney += 100 + 50 * pTwoPassiveIncome;
     }
 }
