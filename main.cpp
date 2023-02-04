@@ -14,10 +14,11 @@ void choiceList(){
 int main() {
     //Object Declaration
     Country country;
-
+    
     //Variables
     int input = 0;
     char techChoice;
+    bool hasWon = false;
     
     //Title Screen
     cout << "Welcome to Country Battle Plus: Remastered.\n";
@@ -25,19 +26,26 @@ int main() {
     cout << endl;
     
     //Game Loop
-    while (country.hasWon() == false) {
+    while (!hasWon) {
+        hasWon = country.hasWon();
+        
+        //Player 1
         cout << country.returnName(1) << ", you have:\n";
         country.returnStats(1);
         cout << "It is your turn, what do you wish to do " << country.returnName(1) << "?\n";
         choiceList();
         cin >> input;
         country.playerChoice(1, input);
+
+        if (country.hasWon())
+            exit(0);
         
+        //Player 2
         cout << country.returnName(2) << ", you have:\n";
         country.returnStats(2);
         cout << "It is your turn, what do you wish to do " << country.returnName(2) << "?\n";
         choiceList();
         cin >> input;
-        country.playerChoice(2, input);  
+        country.playerChoice(2, input); 
     }
 }
