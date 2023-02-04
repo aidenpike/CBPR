@@ -390,11 +390,12 @@ bool Country::hasWon(){
     //Conquer
     if (pOneTerritories <= 0){
         cout << returnName(2) << " has fully conquered " << returnName(1) << "." << std::endl;
-        return true;
+        check = true;
     }
     else if (pTwoTerritories <= 0){
         cout << returnName(1) << " has fully conquered " << returnName(2) << "." << std::endl;
         check = true;
+        exit(0);
     }
     else 
         check = false;
