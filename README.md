@@ -100,8 +100,14 @@ A player can choose their goal for the outcome of the battle
 In the works!
 
 ### To Do
-- Tech upgrade price scaling 
 - weaponFailure()
+- Chance for army to survive a skirmish even after losing (army endurance level)
+- Battle outcomes
+    - Win normally
+    - Win but lose an army
+    - Win but gain an army
+    - Lose normally
+    - Lose but army survives
 - Commander Class
     - Likely one function for level up that ups the stats each level
     - cmdrBattle()
