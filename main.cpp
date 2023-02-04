@@ -36,7 +36,8 @@ int main() {
         choiceList();
         cin >> input;
         country.playerChoice(1, input);
-
+        country.passiveIncome(1);
+        
         if (country.hasWon())
             exit(0);
         
@@ -47,5 +48,6 @@ int main() {
         choiceList();
         cin >> input;
         country.playerChoice(2, input); 
+        country.passiveIncome(2);
     }
-}
+}   
