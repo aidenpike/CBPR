@@ -69,9 +69,9 @@ Country::Country(){
         pOneName = "";
         pOneTerritories = 1;
         pOneArmies = 10;
-        pOneArmySkill = 1;
-        pOneArmyEndurance = 1;
-        pOneWeaponComplexity = 1;
+        pOneArmySkill = 0;
+        pOneArmyEndurance = 0;
+        pOneWeaponComplexity = 0;
         pOnePassiveIncome = 0; 
         pOneMoney = 50000;
         //Player One Commander Stats
@@ -83,9 +83,9 @@ Country::Country(){
         pTwoName = "";
         pTwoTerritories = 1;
         pTwoArmies = 10;
-        pTwoArmySkill = 1;
-        pTwoArmyEndurance = 1;
-        pTwoWeaponComplexity = 1;
+        pTwoArmySkill = 0;
+        pTwoArmyEndurance = 0;
+        pTwoWeaponComplexity = 0;
         pTwoPassiveIncome = 0; 
         pTwoMoney = 50000;
         //Player Two Commander Stats
@@ -155,21 +155,21 @@ void Country::upgradeTechnology(int player, char techBranch){
             case 'A':
                 cout << "After a long day, your armies' training is done. It pays off and their skill gains one level!\n\n";
                 pOneArmySkill++;
-                pOneMoney -= techPrice;
+                pOneMoney -= techPrice + (800 * pOneArmySkill);
             break;
 
             //Army Endurance
             case 'B':
                 cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains one level!\n\n";
                 pOneArmyEndurance++;
-                pOneMoney -= techPrice;
+                pOneMoney -= techPrice + (1000 * pOneArmyEndurance);
             break;
 
             //Weapon Complexity
             case 'C': 
                 cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
                 pOneWeaponComplexity++;
-                pOneMoney -= techPrice;
+                pOneMoney -= 2000 + techPrice + (1000 * pOneWeaponComplexity);
             break;
 
             //Commander Purchase. Will work on this later
@@ -181,7 +181,7 @@ void Country::upgradeTechnology(int player, char techBranch){
                 if (pOnePassiveIncome <= pOneTerritories){
                     cout << "You add more mines to your territories.\n\n";
                     pOnePassiveIncome++;
-                    pOneMoney -= techPrice;
+                    pOneMoney -= techPrice + (800 * pOnePassiveIncome);
                 }
                 else if (pOnePassiveIncome > pOneTerritories){
                     cout << "Not enough territories to add mines to!\n\n";
@@ -203,21 +203,21 @@ void Country::upgradeTechnology(int player, char techBranch){
             case 'A':
                 cout << "After a long day, your armies' training is done. It pays off and their skill gains one level!\n\n";
                 pTwoArmySkill++;
-                pTwoMoney -= techPrice;
+                pTwoMoney -= techPrice + (800 * pTwoArmySkill);;
             break;
 
             //Army Endurance
             case 'B':
                 cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains one level!\n\n";
                 pTwoArmyEndurance++;
-                pTwoMoney -= techPrice;
+                pTwoMoney -= techPrice + (1000 * pTwoArmyEndurance);
             break;
 
             //Weapon Complexity
             case 'C': 
                 cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
                 pTwoWeaponComplexity++;
-                pTwoMoney -= techPrice;
+                pTwoMoney -= 2000 + techPrice + (1000 * pTwoWeaponComplexity);
             break;
 
             //Commander Purchase. Will work on this later
@@ -229,7 +229,7 @@ void Country::upgradeTechnology(int player, char techBranch){
                 if (pTwoPassiveIncome <= pTwoTerritories){
                     cout << "You add more mines to your territories.\n\n";
                     pTwoPassiveIncome++;
-                    pTwoMoney -= techPrice;
+                    pTwoMoney -= techPrice + (800 * pTwoPassiveIncome);
                 }
                 else if (pTwoPassiveIncome > pTwoTerritories){
                     cout << "Not enough territories to add mines to!\n\n";
@@ -302,7 +302,7 @@ void Country::battleInitiation(int player){
             //Devastate
             case 1: 
                 //I am so sorry for this formatting
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3)/*+ pOneCmdrMorale*/>= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3)/*+ pTwoCmdrMorale || weaponFailure(2)*/){
+                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies/*+ pOneCmdrMorale*/<= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + pTwoArmies/*+ pTwoCmdrMorale || weaponFailure(2)*/){
                    cout << returnName(player) << " has devastated this territory.\n\n";
                    pTwoTerritories--;
                    pTwoMoney -= rand()%750 + 500;
@@ -313,7 +313,7 @@ void Country::battleInitiation(int player){
             break;
             //Conquer
             case 2:
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3)/*+ pOneCmdrMorale*/>= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3)/*+ pTwoCmdrMorale || weaponFailure(2)*/){
+                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies/*+ pOneCmdrMorale*/>= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + pTwoArmies/*+ pTwoCmdrMorale || weaponFailure(2)*/){
                     cout << returnName(player) << " has conquered this territory.\n\n";
                     
                     int x = rand()%500 + 250;
@@ -333,7 +333,7 @@ void Country::battleInitiation(int player){
             //Devastate
             case 1: 
                 //I am so sorry for this formatting
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3)/*+ pOneCmdrMorale*/<= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3)/*+ pTwoCmdrMorale || weaponFailure(2)*/){
+                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies/*+ pOneCmdrMorale*/<= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + pTwoArmies/*+ pTwoCmdrMorale || weaponFailure(2)*/){
                    cout << returnName(player) << " has devastated this territory.\n\n";
                    pOneTerritories--;
                    pOneMoney -= rand()%750 + 500;
@@ -344,7 +344,7 @@ void Country::battleInitiation(int player){
             break;
             //Conquer
             case 2:
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3)/*+ pOneCmdrMorale*/<= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3)/*+ pTwoCmdrMorale || weaponFailure(2)*/){
+                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies/*+ pOneCmdrMorale*/<= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + pTwoArmies/*+ pTwoCmdrMorale || weaponFailure(2)*/){
                     cout << returnName(player) << " has conquered this territory.\n\n";
                     
                     int x = rand()%500 + 250;
@@ -407,10 +407,12 @@ bool Country::hasWon(){
     if (pOneTerritories <= 0 && pOneArmies <= 0){
         cout << returnName(1) << " has been eliminated.\n";  
         check = true;
+        exit(0);
     }
     else if (pTwoTerritories <= 0 && pTwoArmies <= 0){
         cout << returnName(2) << " has been eliminated.\n";  
         check = true;
+        exit(0);
     }
     else 
         check = false;
@@ -419,10 +421,12 @@ bool Country::hasWon(){
     if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
         cout << returnName(1) << " has been obliterated.\n";  
         check = true;
+        exit(0);
     }
     else if (pTwoTerritories <= 0 && pTwoArmies <= 0 && pOneMoney <= 0){
         cout << returnName(2) << " has been obliterated.\n";  
         check = true;
+        exit(0);
     }
     else
         check = false;
@@ -430,10 +434,12 @@ bool Country::hasWon(){
     if (pOneMoney == 0){
         cout << returnName(2) << " has fully devastated " << returnName(1) << std::endl;
         check = true;
+        exit(0);
     }
     else if (pTwoMoney <= 0){
         cout << returnName(1) << " has fully devastated " << returnName(2) << std::endl;
         check = true;
+        exit(0);
     }
     else
         check = false;
