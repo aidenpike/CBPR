@@ -15,17 +15,11 @@ Opens a list of options to upgrade, where each option has different effects.
 #### Skill Training 
 Train your armies’ battle skills to up the outcome of winning skirmishes.
 
-- +1d8 to Devastate Check
-- +1d8 to Conquer Check
-- +1d8 to Pillage Check
-
 #### Endurance Training
-- +1d8 to chance for army survival during battles
+Armies have a chance to survive when losing and during random battle outcomes.
 
 #### Weapon Upgrade
-- +1d10 to Devastate Check
-- +1d10 to Conquer Check
-- +1d8 to Pillage Check
+Upgrade the complexity of your weaponry. Do be warned though: the higher your complexity, the higher chance you have for your weapons to fail per skirmish. That being said, the chance is slightly reduced by your army skill level.
   
 #### Passive Income
 By default, you gain 100 dollars every turn. However, this can be upgraded.
@@ -68,6 +62,7 @@ A player can choose their goal for the outcome of the battle
         - Player manages to win by a thread and only have to pay 500-1000 dollars
         - The battle was devastating. Player loses 1300-2000 dollars, 2 armies, and a weapon tech level 
 ## Pass
+Passes your turn.
 
 ## List of Chances & Stats
 ### Stats
