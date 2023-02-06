@@ -100,7 +100,6 @@ A player can choose their goal for the outcome of the battle
 In the works!
 
 ### To Do
-- weaponFailure()
 - Chance for army to survive a skirmish even after losing (army endurance level)
 - Battle outcomes
     - Win normally
