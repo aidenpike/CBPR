@@ -100,14 +100,7 @@ A player can choose their goal for the outcome of the battle
 In the works!
 
 ### To Do
-- Chance for army to survive a skirmish even after losing (army endurance level)
 - Setup check for weapon complexity level -3 to absolutely demolish you in battle
-- Battle outcomes
-    - Win normally
-    - Win but lose an army
-    - Win but gain an army
-    - Lose normally
-    - Lose but army survives
 - Commander Class
     - Likely one function for level up that ups the stats each level
     - cmdrBattle()
@@ -126,4 +119,4 @@ In the works!
     - Grand Buildings - Dedicated buildings that have numerous boosts and multipliers to your stats (also they're very expensive)
         - Grand Science Building - Weapon failure chance reduced by half
         - Grand Barracks - .5 levels added per Army Skill, chance for 2 armies to be recruited
-        - Grand Mine - .5 levels added per Passive Income, bonus 1000 passive income  
+        - Grand Mine - .5 levels added per Passive Income, bonus 1000 passive income
