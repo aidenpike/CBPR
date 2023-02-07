@@ -91,6 +91,9 @@ Country::Country(){
 
 int outcomeChoice = 0;
 
+//Commander Object Declaration
+Commander cmdr;
+
 void Country::getNames(){
     cout << "Player one, enter your name: ";
     getline(cin, pOneName);
@@ -206,10 +209,7 @@ void techList(){
     cout << "[A] Army Skill\n";
     cout << "[B] Army Endurance\n";
     cout << "[C] Weapon Upgrade\n";
-    cout << "[D] Buy Commander\n";
-    cout << "\t[E] Commander Health\n";
-    cout << "\t[F] Commander Armor\n";
-    cout << "\t[G] Commander Damage\n";
+    cout << "[D] Level Up Commander\n";
     cout << "[H] Passive Income\n";
 }
 
@@ -274,7 +274,13 @@ void Country::upgradeTechnology(int player, char techBranch){
 
             //Commander Purchase. Will work on this later
             case 'D':
-                cout << "In the works.\n\n";
+                if (pOneMoney >= cmdr.returnCmdrStats(player, 7)){
+                    cmdr.cmdrLevelUp(player);
+                    pOneMoney -= cmdr.returnCmdrStats(player, 7);
+                }
+                else if (pOneMoney < cmdr.returnCmdrStats(player, 7)){
+                    cout << "Not enough money to level up your commander!\n";
+                }  
             break; 
 
             case 'H':
@@ -320,9 +326,15 @@ void Country::upgradeTechnology(int player, char techBranch){
                 pTwoMoney -= 2000 + techPrice + (1000 * pTwoWeaponComplexity);
             break;
 
-            //Commander Purchase. Will work on this later
+            //Commander Purchase/Level Up
             case 'D':
-                cout << "In the works.\n\n";
+                if (pTwoMoney >= cmdr.returnCmdrStats(player, 7)){
+                    cmdr.cmdrLevelUp(player);
+                    pTwoMoney -= cmdr.returnCmdrStats(player, 7);
+                }
+                else if (pTwoMoney < cmdr.returnCmdrStats(player, 7)){
+                    cout << "Not enough money to level up your commander!\n";
+                }
             break; 
 
             case 'H':
