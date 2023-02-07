@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <ctime>
+#include "Commander.h"
 
 using std::cout;
 using std::string;
@@ -35,11 +36,7 @@ class Country {
         int pOnePassiveIncome;
         int pOneMoney;
         bool pOneWeaponFailure;
-
-        //Player One Commander Stats
-        int pOneCmdrDmg;
-        int pOneCmdrDef;
-        int pOneCmdrHP;
+        bool pOneCmdrExists;
 
         //Player Two Stats
         string pTwoName;
@@ -51,10 +48,7 @@ class Country {
         int pTwoPassiveIncome;
         int pTwoMoney;
         bool pTwoWeaponFailure;
-        //Player Two Commander Stats
-        int pTwoCmdrDmg;
-        int pTwoCmdrDef;
-        int pTwoCmdrHP;
+        bool pTwoCmdrExists;
 };
 
 //Implementation Section
@@ -80,10 +74,7 @@ Country::Country(){
         pOnePassiveIncome = 0; 
         pOneMoney = 50000;
         pOneWeaponFailure = false;
-        //Player One Commander Stats
-        pOneCmdrDmg = 5;
-        pOneCmdrDef = 1;
-        pOneCmdrHP = 10;
+        pOneCmdrExists = false;
 
         //Player Two Stats
         pTwoName = "";
@@ -95,10 +86,7 @@ Country::Country(){
         pTwoPassiveIncome = 0; 
         pTwoMoney = 50000;
         pTwoWeaponFailure = false;
-        //Player Two Commander Stats
-        pTwoCmdrDmg = 5;
-        pTwoCmdrDef = 1;
-        pTwoCmdrHP = 10;
+        pTwoCmdrExists = false;
 }
 
 int outcomeChoice = 0;
