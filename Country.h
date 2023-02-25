@@ -1,6 +1,4 @@
-#include <iostream> 
-#include <ctime>
-#include "Commander.h"
+ #include <iostream>
 
 using std::cout;
 using std::string;
@@ -80,6 +78,7 @@ void listStats(Player *currentPlayer){
     cout << "\t      "         << currentPlayer->money                    << " Dollars\n\n\n";
 }
 
+//Weapon Failure
 void weaponFailure(Player *currentPlayer){
     if (battleRoll(20) <= 5 + 1 * currentPlayer->weaponComplexity - .5 * currentPlayer->armySkill){
         cout << currentPlayer->name << ", your weapons failed during battle!\n";
@@ -107,10 +106,12 @@ void weaponFailure(Player *currentPlayer){
     }
 }
 
-void expandTerritory(Player * currentPlayer){
+//Expand territory
+void expandTerritory(Player *currentPlayer){
     int territoryPrice = 10000;
 
     if (currentPlayer->money >= territoryPrice){
+            cout << currentPlayer->name << " expanded their territory!\n";
             currentPlayer->money -= territoryPrice;
             currentPlayer->territories++;
         }
@@ -120,7 +121,7 @@ void expandTerritory(Player * currentPlayer){
 }
 
 //Actual function for tech choices
-void upgradeTechnology(Player * currentPlayer){
+void upgradeTechnology(Player *currentPlayer){
     int techPrice = 8000;
     char techBranch = ' ';
     
@@ -169,6 +170,7 @@ void upgradeTechnology(Player * currentPlayer){
     }
 }
 
+//Recruit an army
 void recruitArmy(Player *currentPlayer){
     int armyPrice = 8000;
 
@@ -182,234 +184,45 @@ void recruitArmy(Player *currentPlayer){
     }
 }
 
-//Initiate attack
-void Country::battleInitiation(int player){
-    int totals;
-
-    if (player == 1){
-        switch (outcomeChoice){
-            //Devastate
-            case 1: 
-                weaponFailure();
-                //I am so sorry for this formatting
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies + cmdr.returnCmdrStats(1, 6) >= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + .5 * pTwoArmies + cmdr.returnCmdrStats(2, 6) || pTwoWeaponFailure){
-                    if ((cmdr.returnCmdrStats(1, 1) > 0 && cmdr.returnCmdrStats(2, 1) > 0) && battleRoll(20) >= 0){
-                        while (cmdr.returnCmdrStats(1,4) > 0 || cmdr.returnCmdrStats(2, 4) > 0){
-                            cmdr.cmdrBattle();   
-                        }                        
-                    }
-                    if (pOneWeaponFailure){
-                        cout << returnName(player) << " failed to devastate " << returnName(2) << "!\n\n";
-                    }
-                    else {
-                        cout << returnName(player) << " has devastated this territory.\n\n";
-                        pTwoTerritories--;
-                        pTwoMoney -= rand()%750 + 500;
-                    }
-                }
-                else
-                   cout << returnName(player) << " failed to devastate " << returnName(2) << "!\n\n";
-                    
-            break;
-            //Conquer
-            case 2:
-                weaponFailure();
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies + cmdr.returnCmdrStats(1, 6) >= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + .5 * pTwoArmies + cmdr.returnCmdrStats(2, 6) || pTwoWeaponFailure){
-                    if ((cmdr.returnCmdrStats(1, 1) > 0 && cmdr.returnCmdrStats(2, 1) > 0) && battleRoll(20) >= 10){
-                            cmdr.cmdrBattle();                        
-                    }
-                    if (pOneWeaponFailure){
-                        cout << returnName(player) << " failed to conquer " << returnName(2) << "!\n\n";
-                    }
-                    else {
-                        cout << returnName(player) << " has conquered this territory.\n\n";
-                        int x = rand()%500 + 250;
-                    
-                        pOneTerritories++;
-                        pTwoTerritories--;
-                        pOneMoney += x;
-                        pTwoMoney -= x;
-                    }
-                }
-                else {
-                    cout << returnName(player) << " failed to conquer " << returnName(2) << "!\n\n";
-                }
-            break;
-        }
-    }
-    else if (player == 2){
-        switch (outcomeChoice){
-            //Devastate
-            case 1: 
-                weaponFailure();
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies + cmdr.returnCmdrStats(1, 6) <= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + .5 * pTwoArmies + cmdr.returnCmdrStats(2, 6) || pOneWeaponFailure){
-                        if ((cmdr.returnCmdrStats(1, 1) > 0 && cmdr.returnCmdrStats(2, 1) > 0) && battleRoll(20) >= 10){
-                            cout << "A duel between both players' commanders ensues!\n\n";
-                            
-                            do {
-                                cmdr.cmdrBattle();   
-                            } while (cmdr.returnCmdrStats(1,4) > 0 || cmdr.returnCmdrStats(2, 4) > 0);
-                        }
-                        if (pTwoWeaponFailure){
-                            cout << returnName(player) << " failed to devastate " << returnName(1) << "!\n\n";
-                        }
-                        else {
-                            cout << returnName(player) << " has devastated this territory.\n\n";
-                            pOneTerritories--;
-                            pOneMoney -= rand()%750 + 500;
-                        }
-                }
-                else {
-                   cout << returnName(player) << " failed to devastate " << returnName(2) << "!\n\n";
-                }    
-            break;
-            //Conquer
-            case 2:
-                weaponFailure();
-                if (battleRoll(8)  + battleRoll(8) + (pOneArmySkill * 2) + (pOneWeaponComplexity * 3) + pOneArmies + cmdr.returnCmdrStats(1, 6) <= battleRoll(8) + battleRoll(8) + (pTwoArmySkill * 2) + (pTwoWeaponComplexity * 3) + .5 * pTwoArmies + cmdr.returnCmdrStats(2, 6) || pOneWeaponFailure){
-                    if ((cmdr.returnCmdrStats(1, 1) > 0 && cmdr.returnCmdrStats(2, 1) > 0) && battleRoll(20) >= 10){
-                            cmdr.cmdrBattle();                        
-                    }
-                    if (pTwoWeaponFailure){
-                        cout << returnName(player) << " failed to conquer " << returnName(2) << "!\n\n";
-                    }
-                    else {
-                        cout << returnName(player) << " has conquered this territory.\n\n";
-                        int x = rand()%500 + 250;
-                    
-                        pTwoTerritories++;
-                        pOneTerritories--;
-                        pTwoMoney += x;
-                        pOneMoney -= x;
-                    }
-                }
-                else
-                    cout << returnName(player) << " failed to conquer " << returnName(1) << "!\n\n";
-            break;
-        }
-    }
+void battleInitiation(){
+    int *outcomeChoice;
 }
 
-//Check if someone won
-bool Country::hasWon(){
-    bool check = false;
+void playerTurn(Player *currentPlayer){
+    listStats(currentPlayer);
     
-    //Conquer
-    if (pOneTerritories <= 0){
-        cout << returnName(2) << " has fully conquered " << returnName(1) << "." << std::endl;
-        check = true;
-        exit(0);
-    }
-    else if (pTwoTerritories <= 0){
-        cout << returnName(1) << " has fully conquered " << returnName(2) << "." << std::endl;
-        check = true;
-        exit(0);
-    }
-    else 
-        check = false;
+    int choice = 0;
     
-    //Elimination
-    if (pOneTerritories <= 0 && pOneArmies <= 0){
-        cout << returnName(1) << " has been eliminated.\n";  
-        check = true;
-        exit(0);
-    }
-    else if (pTwoTerritories <= 0 && pTwoArmies <= 0){
-        cout << returnName(2) << " has been eliminated.\n";  
-        check = true;
-        exit(0);
-    }
-    else 
-        check = false;
+    cout << "What do you wish to do?" << endl;
+    cout << "\t1. Grow Territory ($10000)\n";
+    cout << "\t2. Upgrade Technology\n";
+    cout << "\t3. Recruit Army ($8000)\n";
+    cout << "\t4. Attack\n";
+    cout << "\t5. Pass\n\n";
 
-    //Obliteration
-    if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
-        cout << returnName(1) << " has been obliterated.\n";  
-        check = true;
-        exit(0);
-    }
-    else if (pTwoTerritories <= 0 && pTwoArmies <= 0 && pTwoMoney <= 0){
-        cout << returnName(2) << " has been obliterated.\n";  
-        check = true;
-        exit(0);
-    }
-    else
-        check = false;
-    //Devastation
-    if (pOneMoney <= 0){
-        cout << returnName(2) << " has fully devastated " << returnName(1) << std::endl;
-        check = true;
-        exit(0);
-    }
-    else if (pTwoMoney <= 0){
-        cout << returnName(1) << " has fully devastated " << returnName(2) << std::endl;
-        check = true;
-        exit(0);
-    }
-    else
-        check = false;
+    cin >> choice;
     
-
-    if (check)
-        return true;
-    else if (!check)
-        return false;
-}
-
-void Country::playerChoice(int player, int choice){
     switch (choice){
         case 1:
-            expandTerritory(player);
+            expandTerritory(currentPlayer);
         break;
             
         case 2:
-            upgradeTechnology(player, ' '); 
+            upgradeTechnology(currentPlayer); 
         break;
 
         case 3:
-            recruitArmy(player);
+            recruitArmy(currentPlayer);
         break;
 
         case 4:
+            int *outcomeChoice;
+            
             cout << "What is your goal for battle?\n";
             cout << "1. Devastate\n";
             cout << "2. Conquer\n";
-            cin >> outcomeChoice;
-            battleInitiation(player);
+            cin >> *outcomeChoice;
+            battleInitiation();
         break;  
-    }
-}
-
-string Country::returnName(int player){
-    return (player == 1 && player != 2) ? pOneName : pTwoName; 
-}
-
-void Country::returnStats(int player){
-    if (player == 1){
-        cout << "\t      " << pOneTerritories              << " Territories\n";
-        cout << "\t      " << pOneArmies                   << " Armies\n";
-        cout << "\tLevel " << pOneArmySkill                << " Army Skill\n";
-        cout << "\tLevel " << pOneArmyEndurance            << " Army Endurance\n";
-        cout << "\tLevel " << pOneWeaponComplexity         << " Weapon Complexity\n";
-        cout << "\t      " << pOnePassiveIncome * 50 + 100 << " Dollars in passive income\n";
-        cout << "\t      " << pOneMoney                    << " Dollars\n\n\n";
-    }
-    else if (player == 2){
-        cout << "\t      " << pTwoTerritories              << " Territories\n";
-        cout << "\t      " << pTwoArmies                   << " Armies\n";
-        cout << "\tLevel " << pTwoArmySkill                << " Army Skill\n";
-        cout << "\tLevel " << pTwoArmyEndurance            << " Army Endurance\n";
-        cout << "\tLevel " << pTwoWeaponComplexity         << " Weapon Complexity\n";
-        cout << "\t      " << pTwoPassiveIncome * 50 + 100 << " Dollars in passive income\n";
-        cout << "\t      " << pTwoMoney                    << " Dollars\n\n\n";
-    }
-}
-
-void Country::passiveIncome(int player){
-    if (player == 1 && pOnePassiveIncome <= pOneTerritories){
-        pOneMoney += 100 + 50 * pOnePassiveIncome;
-    }
-    else if (player == 2 && pTwoPassiveIncome <= pOneTerritories){
-        pTwoMoney += 100 + 50 * pTwoPassiveIncome;
     }
 }
