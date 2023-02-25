@@ -120,117 +120,53 @@ void expandTerritory(Player * currentPlayer){
 }
 
 //Actual function for tech choices
-void Country::upgradeTechnology(int player, char techBranch){
+void upgradeTechnology(Player * currentPlayer){
     int techPrice = 8000;
+    char techBranch = ' ';
     
-    if (player == 1 && pOneMoney >= techPrice){
+    if (currentPlayer->money >= techPrice){
         cout << "Which technology would you like to upgrade?\n";
         techList();
         cin >> techBranch;
-    
+
         techBranch = toupper(techBranch);
-        
+
         switch (techBranch){
             //Army Skill
             case 'A':
-                cout << "After a long day, your armies' training is done. It pays off and their skill gains one level!\n\n";
-                pOneArmySkill++;
-                pOneMoney -= techPrice + (800 * pOneArmySkill);
+                cout << "After a long day, your armies' training is done. It pays off an they gain one skill level!\n\n";
+                currentPlayer->armySkill++;
+                currentPlayer->money -= techPrice + (800 * currentPlayer->armySkill);
             break;
 
-            //Army Endurance
             case 'B':
-                cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains one level!\n\n";
-                pOneArmyEndurance++;
-                pOneMoney -= techPrice + (1000 * pOneArmyEndurance);
+                cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains on level!\n\n";
+                currentPlayer->armyEndurance++;
+                currentPlayer->money -= techPrice + (1000 * currentPlayer->armyEndurance);
             break;
 
-            //Weapon Complexity
-            case 'C': 
+            case 'C':
                 cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
-                pOneWeaponComplexity++;
-                pOneMoney -= 2000 + techPrice + (1000 * pOneWeaponComplexity);
+                currentPlayer->weaponComplexity++;
+                currentPlayer->money -= 2000 + techPrice + (1000 * currentPlayer->weaponComplexity);
             break;
 
-            //Commander Purchase. Will work on this later
             case 'D':
-                if (pOneMoney >= cmdr.returnCmdrStats(player, 7)){
-                    cmdr.cmdrLevelUp(player);
-                    pOneMoney -= cmdr.returnCmdrStats(player, 7);
-                }
-                else if (pOneMoney < cmdr.returnCmdrStats(player, 7)){
-                    cout << "Not enough money to level up your commander!\n";
-                }  
-            break; 
+                cout << "In the works (Again :D)";
+            break;
 
-            case 'H':
-                if (pOnePassiveIncome <= pOneTerritories){
+            case 'H': 
+                if (currentPlayer->passiveIncome <= currentPlayer->territories){
                     cout << "You add more mines to your territories.\n\n";
-                    pOnePassiveIncome++;
-                    pOneMoney -= techPrice + (800 * pOnePassiveIncome);
+                    currentPlayer->passiveIncome++;
+                    currentPlayer->money -= techPrice + (800 * currentPlayer->passiveIncome);
                 }
-                else if (pOnePassiveIncome > pOneTerritories){
+                else {
                     cout << "Not enough territories to add mines to!\n\n";
-                    pOnePassiveIncome = pOneTerritories;
+                    currentPlayer->passiveIncome = currentPlayer->territories;
                 }
         }
     }
-    else if (player == 1 && pOneMoney < 8000)
-        cout << "Not enough money to upgrade a technology!\n";
-    else if (player == 2 && pTwoMoney >= techPrice){
-        cout << "Which technology would you like to upgrade?\n";
-        techList();
-        cin >> techBranch;
-    
-        techBranch = toupper(techBranch);
-        
-        switch (techBranch){
-            //Army Skill
-            case 'A':
-                cout << "After a long day, your armies' training is done. It pays off and their skill gains one level!\n\n";
-                pTwoArmySkill++;
-                pTwoMoney -= techPrice + (800 * pTwoArmySkill);;
-            break;
-
-            //Army Endurance
-            case 'B':
-                cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains one level!\n\n";
-                pTwoArmyEndurance++;
-                pTwoMoney -= techPrice + (1000 * pTwoArmyEndurance);
-            break;
-
-            //Weapon Complexity
-            case 'C': 
-                cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
-                pTwoWeaponComplexity++;
-                pTwoMoney -= 2000 + techPrice + (1000 * pTwoWeaponComplexity);
-            break;
-
-            //Commander Purchase/Level Up
-            case 'D':
-                if (pTwoMoney >= cmdr.returnCmdrStats(player, 7)){
-                    cmdr.cmdrLevelUp(player);
-                    pTwoMoney -= cmdr.returnCmdrStats(player, 7);
-                }
-                else if (pTwoMoney < cmdr.returnCmdrStats(player, 7)){
-                    cout << "Not enough money to level up your commander!\n";
-                }
-            break; 
-
-            case 'H':
-                if (pTwoPassiveIncome <= pTwoTerritories){
-                    cout << "You add more mines to your territories.\n\n";
-                    pTwoPassiveIncome++;
-                    pTwoMoney -= techPrice + (800 * pTwoPassiveIncome);
-                }
-                else if (pTwoPassiveIncome > pTwoTerritories){
-                    cout << "Not enough territories to add mines to!\n\n";
-                    pTwoPassiveIncome = pTwoTerritories;
-                }
-        }
-    }
-    else if (player == 2 && pTwoMoney < 8000)
-        cout << "Not enough money to upgrade a technology!\n";
 }
 
 //Recruit one army
