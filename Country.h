@@ -59,6 +59,16 @@ void getNames(Player *currentPlayer){
     getline(cin, currentPlayer->name);
 }
 
+//Tech List
+void techList(){
+    cout << "[A] Army Skill\n";
+    cout << "[B] Army Endurance\n";
+    cout << "[C] Weapon Upgrade\n";
+    cout << "[D] Level Up Commander\n";
+    cout << "[H] Passive Income\n";
+}
+
+//Stat List
 void listStats(Player *currentPlayer){
     cout << "It is currently " << currentPlayer->name << "'s turn. Here are their stats:\n";
     cout << "\t      "         << currentPlayer->territories              << " Territories\n";
@@ -97,57 +107,16 @@ void weaponFailure(Player *currentPlayer){
     }
 }
 
-//Random battle outcomes (non-player)
-string Country::battleOutcome(int player, bool win){
-    if (player == 1 && win){
-        if (battleRoll(20) + .5 * pOneArmyEndurance < 10){
-            cout << returnName(1) << ", despite your win, you lose an army!\n";
-            pOneArmies--;
-        }
-        else if (battleRoll(20) /*+ .5 * commander.pOneCmdrMOR()*/> 15){
-            cout << returnName(1) << ", with you wits and strategy, you gain an army from the other side!\n";
-            pOneArmies++;
-            pTwoArmies--;
-        }
-        else
-            cout << "Normal win\n";
-    }
-    
-}
-
-//List out all of the technologies you can upgrade
-void techList(){
-    cout << "[A] Army Skill\n";
-    cout << "[B] Army Endurance\n";
-    cout << "[C] Weapon Upgrade\n";
-    cout << "[D] Level Up Commander\n";
-    cout << "[H] Passive Income\n";
-}
-
-
-//Choices 
-//Expand your territories 
-void Country::expandTerritory(int player){
+void expandTerritory(Player * currentPlayer){
     int territoryPrice = 10000;
-    
-    if (player == 1){
-        if (pOneMoney >= territoryPrice){
-            pOneMoney -= territoryPrice;
-            pOneTerritories++;
+
+    if (currentPlayer->money >= territoryPrice){
+            currentPlayer->money -= territoryPrice;
+            currentPlayer->territories++;
         }
-        else if (pOneMoney < territoryPrice){
+        else {
             cout << "You don't have enough money!\n\n";
         }
-    }
-    else if (player == 2) {
-        if (pTwoMoney >= territoryPrice){
-            pTwoMoney -= territoryPrice;
-            pTwoTerritories++;
-        }
-        else if (pTwoMoney < territoryPrice){
-            cout << "You don't have enough money!\n\n";
-        }
-    }
 }
 
 //Actual function for tech choices
