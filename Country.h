@@ -169,25 +169,17 @@ void upgradeTechnology(Player * currentPlayer){
     }
 }
 
-//Recruit one army
-void Country::recruitArmy(int player){
+void recruitArmy(Player *currentPlayer){
     int armyPrice = 8000;
 
-    if (player == 1 && pOneMoney >= 8000){
-        cout << "A new army is hired.\n";
-        pOneArmies++;
-        pOneMoney -= armyPrice;
-    } 
-    else if (player == 1 && pOneMoney < 8000)
-        cout << "Not enough money to recruit another army!\n";
-    
-    if (player == 2 && pTwoMoney >= 8000){
-        cout << "A new army is hired.\n";
-        pTwoArmies++;
-        pTwoMoney -= armyPrice;
-    } 
-    else if (player == 1 && pTwoMoney < 8000)
-        cout << "Not enough money to recruit another army!\n";
+    if (currentPlayer->money >= armyPrice){
+        cout << "A new army is hired.\n\n";
+        currentPlayer->armies++;
+        currentPlayer->money -= armyPrice;
+    }
+    else {
+        cout << "Not enough money to recruit another army!\n\n";
+    }
 }
 
 //Initiate attack
