@@ -1,3 +1,7 @@
+#include <iostream> 
+#include <ctime>
+#include "Commander.h"
+
  #include <iostream>
 
 using std::cout;
@@ -184,10 +188,6 @@ void recruitArmy(Player *currentPlayer){
     }
 }
 
-void battleInitiation(){
-    int *outcomeChoice;
-}
-
 void playerTurn(Player *currentPlayer){
     listStats(currentPlayer);
     
@@ -224,5 +224,163 @@ void playerTurn(Player *currentPlayer){
             cin >> *outcomeChoice;
             battleInitiation();
         break;  
+    }
+}
+
+void battleInitiation(){
+    int outcomeChoice = 0;
+    int pOneATKRoll = battleRoll(8) + battleRoll(8) + p1.armySkill * 2 + p1.weaponComplexity * 3 + p1.armies;
+    int pTwoATKRoll = battleRoll(8) + battleRoll(8) + p2.armySkill * 2 + p2.weaponComplexity * 3 + p2.armies;
+            
+    cout << "What is your goal for battle?\n";
+    cout << "1. Devastate\n";
+    cout << "2. Conquer\n";
+    cin >> outcomeChoice;
+    
+    cout << "A fight ensues!\n\n";
+
+    weaponFailure(&p1);
+    weaponFailure(&p2);
+    
+    switch (outcomeChoice){
+        case 1:
+            if (p1.weaponFailure && p2.weaponFailure){
+                cout << "It's a tie!\n\n";
+                
+                p1.territories--;
+                p1.money -= 5;
+                p2.territories--;
+                p2.money -= 5;
+                
+            }
+            else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
+                cout << p1.name << " has devastated this territory.\n\n";
+                
+                p2.territories--;
+                p2.money -= rand()%750 + 500;
+            }
+            else if (pOneATKRoll == pTwoATKRoll){
+                cout << "It's a tie!\n\n";
+                
+                p1.territories--;
+                p1.money -= 5;
+                p2.territories--;
+                p2.money -= 5;
+            }
+            else if (pOneATKRoll < pTwoATKRoll || p1.weaponFailure){
+                cout << p2.name << " has devastated this territory.\n\n";
+                
+                p1.territories--;
+                p1.money -= rand()%750 + 500;
+            }
+        break;
+
+        case 2:
+            if (p1.weaponFailure && p2.weaponFailure){
+                cout << "It's a tie!\n\n";
+                
+                p1.territories--;
+                p1.money -= 5;
+                p2.territories--;
+                p2.money -= 5;
+            }
+            else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
+                cout << p1.name << " has conquered this territory.\n\n";
+                
+                p1.territories++;
+                p2.territories--;
+                p1.money += rand()%500 + 250;
+                p2.money -= rand()%500 + 250;
+            }
+            else if (pOneATKRoll == pTwoATKRoll || (p1.weaponFailure && p2.weaponFailure)){
+                cout << "It's a tie!";
+                p1.territories--;
+                p1.money -= 5;
+                p2.territories--;
+                p2.money -= 5;
+            }
+            else if (pOneATKRoll < pTwoATKRoll || p1.weaponFailure){
+                cout << p2.name << " has conquered this territory.\n\n";
+               
+                p2.territories++;
+                p1.territories--;
+                p2.money += rand()%500 + 250;
+                p1.money -= rand()%500 + 250;
+            }
+    }
+}
+
+//Check if someone won
+bool Country::hasWon(){
+    bool check = false;
+    
+    //Conquer
+    if (pOneTerritories <= 0){
+        cout << returnName(2) << " has fully conquered " << returnName(1) << "." << std::endl;
+        check = true;
+        exit(0);
+    }
+    else if (pTwoTerritories <= 0){
+        cout << returnName(1) << " has fully conquered " << returnName(2) << "." << std::endl;
+        check = true;
+        exit(0);
+    }
+    else 
+        check = false;
+    
+    //Elimination
+    if (pOneTerritories <= 0 && pOneArmies <= 0){
+        cout << returnName(1) << " has been eliminated.\n";  
+        check = true;
+        exit(0);
+    }
+    else if (pTwoTerritories <= 0 && pTwoArmies <= 0){
+        cout << returnName(2) << " has been eliminated.\n";  
+        check = true;
+        exit(0);
+    }
+    else 
+        check = false;
+
+    //Obliteration
+    if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
+        cout << returnName(1) << " has been obliterated.\n";  
+        check = true;
+        exit(0);
+    }
+    else if (pTwoTerritories <= 0 && pTwoArmies <= 0 && pTwoMoney <= 0){
+        cout << returnName(2) << " has been obliterated.\n";  
+        check = true;
+        exit(0);
+    }
+    else
+        check = false;
+    //Devastation
+    if (pOneMoney <= 0){
+        cout << returnName(2) << " has fully devastated " << returnName(1) << std::endl;
+        check = true;
+        exit(0);
+    }
+    else if (pTwoMoney <= 0){
+        cout << returnName(1) << " has fully devastated " << returnName(2) << std::endl;
+        check = true;
+        exit(0);
+    }
+    else
+        check = false;
+    
+
+    if (check)
+        return true;
+    else if (!check)
+        return false;
+}
+
+void Country::passiveIncome(int player){
+    if (player == 1 && pOnePassiveIncome <= pOneTerritories){
+        pOneMoney += 100 + 50 * pOnePassiveIncome;
+    }
+    else if (player == 2 && pTwoPassiveIncome <= pOneTerritories){
+        pTwoMoney += 100 + 50 * pTwoPassiveIncome;
     }
 }
