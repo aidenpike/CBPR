@@ -2,8 +2,6 @@
 #include <ctime>
 #include "Commander.h"
 
- #include <iostream>
-
 using std::cout;
 using std::string;
 using std::cin;
@@ -188,45 +186,6 @@ void recruitArmy(Player *currentPlayer){
     }
 }
 
-void playerTurn(Player *currentPlayer){
-    listStats(currentPlayer);
-    
-    int choice = 0;
-    
-    cout << "What do you wish to do?" << endl;
-    cout << "\t1. Grow Territory ($10000)\n";
-    cout << "\t2. Upgrade Technology\n";
-    cout << "\t3. Recruit Army ($8000)\n";
-    cout << "\t4. Attack\n";
-    cout << "\t5. Pass\n\n";
-
-    cin >> choice;
-    
-    switch (choice){
-        case 1:
-            expandTerritory(currentPlayer);
-        break;
-            
-        case 2:
-            upgradeTechnology(currentPlayer); 
-        break;
-
-        case 3:
-            recruitArmy(currentPlayer);
-        break;
-
-        case 4:
-            int *outcomeChoice;
-            
-            cout << "What is your goal for battle?\n";
-            cout << "1. Devastate\n";
-            cout << "2. Conquer\n";
-            cin >> *outcomeChoice;
-            battleInitiation();
-        break;  
-    }
-}
-
 void battleInitiation(){
     int outcomeChoice = 0;
     int pOneATKRoll = battleRoll(8) + battleRoll(8) + p1.armySkill * 2 + p1.weaponComplexity * 3 + p1.armies;
@@ -308,79 +267,43 @@ void battleInitiation(){
                 p1.money -= rand()%500 + 250;
             }
     }
+
+    p1.weaponFailure = false;
+    p2.weaponFailure = false;
 }
 
-//Check if someone won
-bool Country::hasWon(){
-    bool check = false;
+void playerTurn(Player *currentPlayer){
+    //Passive Income
+    currentPlayer->money += 100 + (50 * currentPlayer->passiveIncome);
+    //List stats for current player
+    listStats(currentPlayer);
+    int choice = 0;
     
-    //Conquer
-    if (pOneTerritories <= 0){
-        cout << returnName(2) << " has fully conquered " << returnName(1) << "." << std::endl;
-        check = true;
-        exit(0);
-    }
-    else if (pTwoTerritories <= 0){
-        cout << returnName(1) << " has fully conquered " << returnName(2) << "." << std::endl;
-        check = true;
-        exit(0);
-    }
-    else 
-        check = false;
+    cout << "What do you wish to do?" << endl;
+    cout << "\t1. Grow Territory ($10000)\n";
+    cout << "\t2. Upgrade Technology\n";
+    cout << "\t3. Recruit Army ($8000)\n";
+    cout << "\t4. Attack\n";
+    cout << "\t5. Pass\n\n";
+
+    cin >> choice;
     
-    //Elimination
-    if (pOneTerritories <= 0 && pOneArmies <= 0){
-        cout << returnName(1) << " has been eliminated.\n";  
-        check = true;
-        exit(0);
-    }
-    else if (pTwoTerritories <= 0 && pTwoArmies <= 0){
-        cout << returnName(2) << " has been eliminated.\n";  
-        check = true;
-        exit(0);
-    }
-    else 
-        check = false;
+    switch (choice){
+        case 1:
+            expandTerritory(currentPlayer);
+        break;
+            
+        case 2:
+            upgradeTechnology(currentPlayer); 
+        break;
 
-    //Obliteration
-    if (pOneTerritories <= 0 && pOneArmies <= 0 && pOneMoney <= 0){
-        cout << returnName(1) << " has been obliterated.\n";  
-        check = true;
-        exit(0);
-    }
-    else if (pTwoTerritories <= 0 && pTwoArmies <= 0 && pTwoMoney <= 0){
-        cout << returnName(2) << " has been obliterated.\n";  
-        check = true;
-        exit(0);
-    }
-    else
-        check = false;
-    //Devastation
-    if (pOneMoney <= 0){
-        cout << returnName(2) << " has fully devastated " << returnName(1) << std::endl;
-        check = true;
-        exit(0);
-    }
-    else if (pTwoMoney <= 0){
-        cout << returnName(1) << " has fully devastated " << returnName(2) << std::endl;
-        check = true;
-        exit(0);
-    }
-    else
-        check = false;
-    
+        case 3:
+            recruitArmy(currentPlayer);
+        break;
 
-    if (check)
-        return true;
-    else if (!check)
-        return false;
-}
+        case 4:
+            battleInitiation();
+        break;  
+    }
+} 
 
-void Country::passiveIncome(int player){
-    if (player == 1 && pOnePassiveIncome <= pOneTerritories){
-        pOneMoney += 100 + 50 * pOnePassiveIncome;
-    }
-    else if (player == 2 && pTwoPassiveIncome <= pOneTerritories){
-        pTwoMoney += 100 + 50 * pTwoPassiveIncome;
-    }
-}
