@@ -1,6 +1,4 @@
-#include <iostream> 
-#include <ctime>
-#include "Commander.h"
+#include <iostream>
 
 using std::cout;
 using std::string;
@@ -9,13 +7,13 @@ using std::endl;
 
 struct Player {
     string name = "";
-    int territories = 1;
+    int territories = 2;
     int armies = 10;
     int armySkill = 0;
     int armyEndurance = 0;
     int weaponComplexity = 0;
     int passiveIncome = 0; 
-    int money = 50000;
+    int money = 49000;
     bool weaponFailure = false;
 } p1, p2;
 
@@ -205,10 +203,8 @@ void battleInitiation(){
         case 1:
             if (p1.weaponFailure && p2.weaponFailure){
                 cout << "It's a tie!\n\n";
-                
-                p1.territories--;
+            
                 p1.money -= 5;
-                p2.territories--;
                 p2.money -= 5;
                 
             }
@@ -221,9 +217,7 @@ void battleInitiation(){
             else if (pOneATKRoll == pTwoATKRoll){
                 cout << "It's a tie!\n\n";
                 
-                p1.territories--;
                 p1.money -= 5;
-                p2.territories--;
                 p2.money -= 5;
             }
             else if (pOneATKRoll < pTwoATKRoll || p1.weaponFailure){
@@ -238,9 +232,7 @@ void battleInitiation(){
             if (p1.weaponFailure && p2.weaponFailure){
                 cout << "It's a tie!\n\n";
                 
-                p1.territories--;
                 p1.money -= 5;
-                p2.territories--;
                 p2.money -= 5;
             }
             else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
@@ -252,10 +244,8 @@ void battleInitiation(){
                 p2.money -= rand()%500 + 250;
             }
             else if (pOneATKRoll == pTwoATKRoll || (p1.weaponFailure && p2.weaponFailure)){
-                cout << "It's a tie!";
-                p1.territories--;
+                cout << "It's a tie!\n\n";
                 p1.money -= 5;
-                p2.territories--;
                 p2.money -= 5;
             }
             else if (pOneATKRoll < pTwoATKRoll || p1.weaponFailure){
@@ -272,7 +262,48 @@ void battleInitiation(){
     p2.weaponFailure = false;
 }
 
+//Lose Check
+void hasLost(){
+    bool lose = false;
+
+    if (p1.territories <= 0 && p2.territories <= 0){
+        cout << "Both empires go down in flames. The war is a tie.\n\n";
+        lose = true;
+        exit(0);
+    }
+    
+    if (p1.money <= 0 && p2.money <= 0){
+        cout << "Both empires go down in flames. The war is a tie.\n\n";
+        lose = true;
+        exit(0);
+    }
+
+    if (p1.money <= 0){
+        cout << p2.name << " has won this war!\n\n";
+        lose = true;
+        exit(0);
+    }
+    else if (p1.territories <= 0){
+        cout << p2.name << " has won this war!\n\n";
+        lose = true;
+        exit(0);
+    }
+    
+    if (p2.money <= 0){
+        cout << p1.name << " has won this war!\n\n";
+        lose = true;
+        exit(0);
+    }
+    else if (p2.territories <= 0){
+        cout << p1.name << " has won this war!\n\n";
+        lose = true;
+        exit(0);
+    }
+}
+
 void playerTurn(Player *currentPlayer){
+    hasLost();
+    
     //Passive Income
     currentPlayer->money += 100 + (50 * currentPlayer->passiveIncome);
     //List stats for current player
@@ -306,4 +337,3 @@ void playerTurn(Player *currentPlayer){
         break;  
     }
 } 
-
