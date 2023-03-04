@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "Commander.h"
 
 using std::cout;
 using std::string;
@@ -161,7 +162,7 @@ void recruitArmy(Player *currentPlayer){
 }
 
 void battleInitiation(){
-    int outcomeChoice = 0;
+    /*int outcomeChoice = 0;
     int pOneATKRoll = battleRoll(8) + battleRoll(8) + p1.armySkill * 2 + p1.weaponComplexity * 3 + p1.armies;
     int pTwoATKRoll = battleRoll(8) + battleRoll(8) + p2.armySkill * 2 + p2.weaponComplexity * 3 + p2.armies;
             
@@ -235,7 +236,7 @@ void battleInitiation(){
     }
 
     p1.weaponFailure = false;
-    p2.weaponFailure = false;
+    p2.weaponFailure = false;*/
 }
 
 //Lose Check
@@ -301,7 +302,8 @@ void playerTurn(Player *currentPlayer){
         break;
 
         case 4:
-            battleInitiation();
+            cmdrBattle();
+            //battleInitiation();
         break;  
     }
 } 
