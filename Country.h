@@ -7,7 +7,7 @@ using std::cin;
 using std::endl;
 
 struct Player {
-    string name = "";
+    string name = " ";
     int territories = 2;
     int armies = 10;
     int armySkill = 0;
@@ -23,8 +23,8 @@ Player *currentPlayer;
 //Rolls, chances, and lists
 //Dice Roll
 int battleRoll(int dice){
-    srand(int(time(0)));
-    
+    srand(int(time(nullptr)));
+
     return rand()%dice + 1;
 }
 
@@ -91,9 +91,9 @@ void expandTerritory(Player *currentPlayer){
             currentPlayer->money -= territoryPrice;
             currentPlayer->territories++;
         }
-        else {
-            cout << "You don't have enough money!\n\n";
-        }
+    else {
+        cout << "You don't have enough money!\n\n";
+    }
 }
 
 //Actual function for tech choices
@@ -123,7 +123,7 @@ void upgradeTechnology(Player *currentPlayer){
             break;
 
             case 'C':
-                cout << "Using your ingenius military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
+                cout << "Using your ingenious military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
                 currentPlayer->weaponComplexity++;
                 currentPlayer->money -= 2000 + techPrice + (1000 * currentPlayer->weaponComplexity);
             break;
@@ -240,39 +240,31 @@ void battleInitiation(){
 
 //Lose Check
 void hasLost(){
-    bool lose = false;
-
     if (p1.territories <= 0 && p2.territories <= 0){
         cout << "Both empires go down in flames. The war is a tie.\n\n";
-        lose = true;
         exit(0);
     }
     
     if (p1.money <= 0 && p2.money <= 0){
         cout << "Both empires go down in flames. The war is a tie.\n\n";
-        lose = true;
         exit(0);
     }
 
     if (p1.money <= 0){
         cout << p2.name << " has won this war!\n\n";
-        lose = true;
         exit(0);
     }
     else if (p1.territories <= 0){
         cout << p2.name << " has won this war!\n\n";
-        lose = true;
         exit(0);
     }
     
     if (p2.money <= 0){
         cout << p1.name << " has won this war!\n\n";
-        lose = true;
         exit(0);
     }
     else if (p2.territories <= 0){
         cout << p1.name << " has won this war!\n\n";
-        lose = true;
         exit(0);
     }
 }
