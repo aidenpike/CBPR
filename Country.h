@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using std::cout;
 using std::string;
@@ -24,32 +25,7 @@ Player *currentPlayer;
 int battleRoll(int dice){
     srand(int(time(0)));
     
-    switch (dice){
-        case 4:
-            return rand()%4 + 1;
-        break;
-
-        case 6:
-            return rand()%6 + 1;
-        break;
-
-        case 8:
-            return rand()%8 + 1;
-        break;
-
-        case 10:
-            return rand()%10 + 1;
-        break;
-
-        case 12:
-            return rand()%12 + 1;
-        break;
-
-        case 20:
-            return rand()%20 + 1;
-        break;
-    }
-    return 0;
+    return rand()%dice + 1;
 }
 
 void getNames(Player *currentPlayer){
