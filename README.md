@@ -3,7 +3,16 @@ Remastered version of Country Battle Plus. Will likely get renamed.
 
 # Versions
 ## Version 0.0
-In the works!
+Complete! From here, I will list off bugs and updates, including things listed on the to do list below.
+
+### To Do
+- Setup check for weapon complexity level -3 to absolutely demolish you in battle
+- Add color to text
+- Add startup menu
+- Find a way to put names in commander fights OR alternatively have player name their cmdr
+- Balance the stats like a lot oh my god
+- Make integer inputs non-integer capable
+- Loop the current player's turn until they input an appropriate number
 
 # Gameplay 
 ## Role of Chance
@@ -106,15 +115,6 @@ Passes your turn.
             - Battle outcome after weapon failure
                 - Amount of money lost in outcome
 - Chance for commanders to fight 
-
-### To Do
-- Setup check for weapon complexity level -3 to absolutely demolish you in battle
-- Add color to text
-- Add startup menu
-- Find a way to put names in commander fights OR alternatively have player name their cmdr
-- Balance the stats like a lot oh my god
-- Make integer inputs non-integer capable
-- Loop the current player's turn until they input an appropriate number
 
 ### Ideas
 - choiceList() specific to what the player has
