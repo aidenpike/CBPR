@@ -59,11 +59,17 @@ void cmdrFight(Commander *currentCmdr, Commander *opposingCmdr){
 
     switch (choice){
         case 1:
-            cout << "Player 1's commander takes a swift strike at his opponent!\n";
+            cout << "This commander takes a swift strike at his opponent!\n";
 
-            if (rand()%20 + 1 < 10){
+            if (rand()%20 + 1 < 20){
                 cout << "He hits!\n";
-                (currentCmdr->cmdrDEF > 0) ? opposingCmdr->cmdrDEF -= currentCmdr->cmdrATK : opposingCmdr->cmdrHP -= currentCmdr->cmdrATK;
+                if (currentCmdr->cmdrDEF > 0){
+                    currentCmdr->cmdrDEF -= opposingCmdr->cmdrATK;
+                }
+                else if (currentCmdr->cmdrDEF <= 0){
+                    currentCmdr->cmdrHP -= opposingCmdr->cmdrATK;
+                }
+                
             }
             else {
                 cout << "He misses!\n";
@@ -72,7 +78,7 @@ void cmdrFight(Commander *currentCmdr, Commander *opposingCmdr){
 
         case 2:
             if (cmdr1.cmdrDEF < cmdr1.cmdrMDEF){
-                cout << "Player 1's commander repairs his armor!\n'";
+                cout << "This commander repairs his armor!\n'";
                 currentCmdr->cmdrDEF += (rand()%3 + 1) * currentCmdr->cmdrLVL;
             }
             else if (cmdr1.cmdrDEF >= cmdr1.cmdrMDEF){
