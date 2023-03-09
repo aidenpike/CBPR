@@ -113,6 +113,8 @@ Passes your turn.
 - Add startup menu
 - Find a way to put names in commander fights OR alternatively have player name their cmdr
 - Balance the stats like a lot oh my god
+- Make integer inputs non-integer capable
+- Loop the current player's turn until they input an appropriate number
 
 ### Ideas
 - choiceList() specific to what the player has
