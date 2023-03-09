@@ -112,7 +112,6 @@ Passes your turn.
 - Add color to text
 - Add startup menu
 - Find a way to put names in commander fights OR alternatively have player name their cmdr
-- Battle outcomes
 - Balance the stats like a lot oh my god
 
 ### Ideas
