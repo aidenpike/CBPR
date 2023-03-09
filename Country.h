@@ -68,10 +68,12 @@ void listStats(Player *currentPlayer){
 void weaponFailure(Player *currentPlayer){
     if (battleRoll(20) <= 5 + 1 * currentPlayer->weaponComplexity - .5 * currentPlayer->armySkill){
         cout << currentPlayer->name << ", your weapons failed during battle!\n";
-        switch (rand()%3+1){
+        switch (battleRoll(3){
             case 1: 
                 cout << currentPlayer->name << " loses this battle, and flees!\n";
-                currentPlayer->armies--;
+                
+                (battleRoll(10) + currentPlayer->armyEndurance <= 5) ? currentPlayer->armies--;
+                
                 currentPlayer->money -=  rand()%1000 + 500;
                 currentPlayer->weaponFailure = true;
             break;
@@ -85,7 +87,9 @@ void weaponFailure(Player *currentPlayer){
             case 3:
                 cout << currentPlayer->name << ", the battle was immensely devastating.\n";
                 currentPlayer->money -= rand()%2000 + 1300;
-                currentPlayer->armies -= 2;
+
+                (battleRoll(10) + currentPlayer->armyEndurance <= 10) ? currentPlayer->armies -= 2;
+                
                 currentPlayer->weaponComplexity--;
                 currentPlayer->weaponFailure = true;
         }
