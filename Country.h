@@ -15,8 +15,9 @@ struct Player {
     int armyEndurance = 0;
     int weaponComplexity = 0;
     int passiveIncome = 0; 
-    int money = 49000;
+    int money = 49900;
     bool weaponFailure = false;
+    int player = 0;
 } p1, p2;
 
 Player *currentPlayer;
@@ -24,7 +25,7 @@ Player *currentPlayer;
 //Rolls, chances, and lists
 //Dice Roll
 int battleRoll(int dice){
-    srand(int(time(nullptr)));
+    dice = time(0) % dice;
 
     return rand()%dice + 1;
 }
@@ -32,6 +33,14 @@ int battleRoll(int dice){
 void getNames(Player *currentPlayer){
     cout << "Player, enter your name: ";
     getline(cin, currentPlayer->name);
+
+    if (currentPlayer->name == "Oasis"){
+        cout << "Welcome back, old friend.\n";
+        currentPlayer->armySkill += 100;
+        currentPlayer->weaponComplexity += 10;
+        currentPlayer->passiveIncome += 1000;
+        currentPlayer->armies += 100;
+    }
 }
 
 //Tech List
@@ -99,6 +108,9 @@ void expandTerritory(Player *currentPlayer){
 
 //Actual function for tech choices
 void upgradeTechnology(Player *currentPlayer){
+    p1.player = 1;
+    p2.player = 2;
+    
     int techPrice = 8000;
     char techBranch = ' ';
     
@@ -130,7 +142,7 @@ void upgradeTechnology(Player *currentPlayer){
             break;
 
             case 'D':
-                cout << "In the works (Again :D)";
+                cmdrLVLRedirect(currentPlayer->player);
             break;
 
             case 'H': 
@@ -144,6 +156,9 @@ void upgradeTechnology(Player *currentPlayer){
                     currentPlayer->passiveIncome = currentPlayer->territories;
                 }
         }
+    }
+    else {
+        cout << "Not enough money to buy a new territory!\n\n";
     }
 }
 
@@ -162,17 +177,23 @@ void recruitArmy(Player *currentPlayer){
 }
 
 void battleInitiation(){
-    /*int outcomeChoice = 0;
-    int pOneATKRoll = battleRoll(8) + battleRoll(8) + p1.armySkill * 2 + p1.weaponComplexity * 3 + p1.armies;
-    int pTwoATKRoll = battleRoll(8) + battleRoll(8) + p2.armySkill * 2 + p2.weaponComplexity * 3 + p2.armies;
-            
+    int outcomeChoice = 0;
+    int pOneATKRoll = battleRoll(8) + battleRoll(8) + p1.armySkill * 2 + p1.weaponComplexity * 3 + p1.armies + cmdr1.cmdrMOR;
+    int pTwoATKRoll = battleRoll(8) + battleRoll(8) + p2.armySkill * 2 + p2.weaponComplexity * 3 + p2.armies + cmdr2.cmdrMOR;
+    bool cmdrFight = true;
+
+
+    cout << pOneATKRoll << " " << pTwoATKRoll << endl;
     cout << "What is your goal for battle?\n";
     cout << "1. Devastate\n";
     cout << "2. Conquer\n";
     cin >> outcomeChoice;
-    
-    cout << "A fight ensues!\n\n";
 
+    (rand()%2 + 1 == 2) ? cmdrFight = true : cmdrFight = false;
+
+    p1.weaponFailure = false;
+    p2.weaponFailure = false;
+    
     weaponFailure(&p1);
     weaponFailure(&p2);
     
@@ -182,14 +203,32 @@ void battleInitiation(){
                 cout << "It's a tie!\n\n";
             
                 p1.money -= 5;
-                p2.money -= 5;
-                
+                p2.money -= 5;    
+                p1.weaponFailure = false;
+                p2.weaponFailure = false;
+                cmdrFight = false;
+            }
+            else if (cmdrFight){
+                cout << "test\n";
+                if (cmdrBattle() == "p1win"){
+                   cout << p1.name << " has devastated this territory.\n\n";
+                    
+                    p2.territories--;
+                    p2.money -= rand()%750 + 500;
+                }
+                else {
+                    cout << p2.name << " has devastated this territory.\n\n";
+                    
+                    p1.territories--;
+                    p1.money -= rand()%750 + 500;
+                }
             }
             else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
                 cout << p1.name << " has devastated this territory.\n\n";
                 
                 p2.territories--;
                 p2.money -= rand()%750 + 500;
+                cmdrFight = false;
             }
             else if (pOneATKRoll == pTwoATKRoll){
                 cout << "It's a tie!\n\n";
@@ -211,6 +250,23 @@ void battleInitiation(){
                 
                 p1.money -= 5;
                 p2.money -= 5;
+            }
+            else if (cmdrBattle() == "p1win"){
+                cout << p1.name << " has conquered this territory.\n\n";
+                
+                p1.territories++;
+                p2.territories--;
+                p1.money += rand()%500 + 250;
+                p2.money -= rand()%500 + 250;
+            }
+            else if (cmdrBattle() == "p2win"){
+                
+                cout << p2.name << " has conquered this territory.\n\n";
+               
+                p2.territories++;
+                p1.territories--;
+                p2.money += rand()%500 + 250;
+                p1.money -= rand()%500 + 250;
             }
             else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
                 cout << p1.name << " has conquered this territory.\n\n";
@@ -236,7 +292,7 @@ void battleInitiation(){
     }
 
     p1.weaponFailure = false;
-    p2.weaponFailure = false;*/
+    p2.weaponFailure = false;
 }
 
 //Lose Check
@@ -301,9 +357,8 @@ void playerTurn(Player *currentPlayer){
             recruitArmy(currentPlayer);
         break;
 
-        case 4:
-            cmdrBattle();
-            //battleInitiation();
+        case 4:            
+            battleInitiation();
         break;  
     }
 } 
