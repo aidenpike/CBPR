@@ -8,6 +8,9 @@ Numbers after the decimal are minor or bug fixes (e.g. 0.1)
 Complete! From here, I will list off bugs and updates, including things listed on the to do list below.
 ## Version 0.1
 In the works! Will be working on color to text, money tags, disallowing the player to buy upgrades beyond the base price, and bug fixes.
+- Added money tags
+- Added comma seperation for nums above 999
+
 ### To Do
 - Setup check for weapon complexity level -3 to absolutely demolish you in battle
 - Add color to text
@@ -16,7 +19,6 @@ In the works! Will be working on color to text, money tags, disallowing the play
 - Balance the stats like a lot oh my god
 - Make integer inputs non-integer capable
 - Loop the current player's turn until they input an appropriate number
-- Add commas to money above 999
 - Disallow player to buy upgrades beyond base price
 - Equipment for commander
 #### Bugs
