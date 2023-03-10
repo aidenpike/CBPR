@@ -13,6 +13,13 @@ Complete! From here, I will list off bugs and updates, including things listed o
 - Balance the stats like a lot oh my god
 - Make integer inputs non-integer capable
 - Loop the current player's turn until they input an appropriate number
+- Add money tags
+- Add commas to money above 999
+- Disallow player to buy upgrades beyond base price
+- Equipment for commander
+#### Bugs
+- Weapon failure should stop battle
+- Commander stats should not remain the same as previous battle
 
 # Gameplay 
 ## Role of Chance
@@ -127,5 +134,9 @@ Passes your turn.
         - Grand Barracks - .5 levels added per Army Skill, chance for 2 armies to be recruited
         - Grand Mine - .5 levels added per Passive Income, bonus 1000 passive income
 - Make 2 pointer objects to lessen if/else statements
-- Equipment for commander
 - Commander accuracy: affects the chance that the commander hits
+- Different soldier unit types
+    - Pikeman
+    - Horseman
+    - Swordsman
+- Commander skillset
