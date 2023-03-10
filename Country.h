@@ -144,53 +144,71 @@ void upgradeTechnology(Player *currentPlayer){
     int techPrice = 8000;
     char techBranch = ' ';
     
-    if (currentPlayer->money >= techPrice){
-        cout << "Which technology would you like to upgrade?\n";
-        techList();
-        cin >> techBranch;
+    cout << "Which technology would you like to upgrade?\n";
+    techList();
+    cin >> techBranch;
 
-        techBranch = toupper(techBranch);
+    techBranch = toupper(techBranch);
 
-        switch (techBranch){
-            //Army Skill
-            case 'A':
+    switch (techBranch){
+        //Army Skill
+        case 'A':
+            if (techPrice + (800 * currentPlayer->armySkill) > currentPlayer->money){
+                cout << "You don't have enough money!\n\n";
+            }
+            else {
                 cout << "After a long day, your armies' training is done. It pays off an they gain one skill level!\n\n";
-                currentPlayer->armySkill++;
+                currentPlayer->armySkill++; 
                 currentPlayer->money -= techPrice + (800 * currentPlayer->armySkill);
-            break;
+            }
+        break;
 
-            case 'B':
+        case 'B':
+            if (techPrice + (1000 * currentPlayer->armyEndurance > currentPlayer->money)){
+                cout << "Not enough money!\n\n";
+            }
+            else {
                 cout << "Your armies train hard, focusing more towards their endurance. Their endurance gains on level!\n\n";
                 currentPlayer->armyEndurance++;
                 currentPlayer->money -= techPrice + (1000 * currentPlayer->armyEndurance);
-            break;
+            }
+        break;
 
-            case 'C':
+        case 'C':
+            if (2000 + techPrice + (1000 * currentPlayer->weaponComplexity > currentPlayer->money)){
+                cout << "Not enough money!\n\n";
+            }
+            else {
                 cout << "Using your ingenious military scientists, you manage to develop a newer, more complex weapon. Your weapon complexity level increases!\n\n";
                 currentPlayer->weaponComplexity++;
                 currentPlayer->money -= 2000 + techPrice + (1000 * currentPlayer->weaponComplexity);
-            break;
+            }
+        break;
 
-            case 'D':
+        case 'D':
+            if (techPrice + (500 * currentPlayer->returnLevel(currentPlayer->player)) > currentPlayer->money){
+                cout << "Not enough money!\n\n";
+            }
+            else {
                 cmdrLVLRedirect(currentPlayer->player);
-                currentPlayer->money -= techPrice + (500 * currentPlayer->armyEndurance);
-            break;
+                currentPlayer->money -= techPrice + (500 * currentPlayer->returnLevel(currentPlayer->player));
+            }
+        break;
 
-            case 'H': 
-                if (currentPlayer->passiveIncome <= currentPlayer->territories){
-                    cout << "You add more mines to your territories.\n\n";
-                    currentPlayer->passiveIncome++;
-                    currentPlayer->money -= techPrice + (800 * currentPlayer->passiveIncome);
-                }
-                else {
-                    cout << "Not enough territories to add mines to!\n\n";
-                    currentPlayer->passiveIncome = currentPlayer->territories;
-                }
+        case 'H':
+            if (techPrice + (800 * currentPlayer->passiveIncome) > currentPlayer->money){
+                cout << "Not enough money!\n\n";
+            }
+            else if (currentPlayer->passiveIncome <= currentPlayer->territories){
+                cout << "You add more mines to your territories.\n\n";
+                currentPlayer->passiveIncome++;
+                currentPlayer->money -= techPrice + (800 * currentPlayer->passiveIncome);
+            }
+            else {
+                cout << "Not enough territories to add mines to!\n\n";
+                currentPlayer->passiveIncome = currentPlayer->territories;
+            }
         }
-    }
-    else {
-        cout << "Not enough money to buy a new territory!\n\n";
-    }
 }
 
 //Recruit an army
