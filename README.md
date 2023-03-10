@@ -22,7 +22,6 @@ In the works! Will be working on color to text, money tags, disallowing the play
 - Loop the current player's turn until they input an appropriate number
 - Equipment for commander
 #### Bugs
-- Weapon failure should stop battle
 - Commander stats should not remain the same as previous battle
 
 # Ideas
