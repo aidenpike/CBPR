@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include "Commander.h"
 
@@ -43,6 +44,27 @@ void getNames(Player *currentPlayer){
     }
 }
 
+//Comma Seperation Math (100% not stolen)
+string commaSeperate(int num){
+    auto src = std::to_string(num);
+    auto dest = std::string();
+    auto count = 3;
+    
+    for(auto i = src.crbegin() ; i != src.crend() ; ++i) {
+        if (count == 0)
+        {
+            dest.push_back(',');
+            count = 3;
+        }
+        if (count--) {
+            dest.push_back(*i);
+        }
+    }
+    reverse(dest.begin(), dest.end());
+
+    return dest;   
+}
+
 //Tech List
 void techList(){
     cout << "[A] Army Skill\n";
@@ -54,19 +76,22 @@ void techList(){
 
 //Stat List
 void listStats(Player *currentPlayer){
+    string passiveIncome = commaSeperate(currentPlayer->passiveIncome * 50 + 100);
+    string money = commaSeperate(currentPlayer->money);
+    
     cout << "It is currently " << currentPlayer->name << "'s turn. Here are their stats:\n";
     cout << "\t      "         << currentPlayer->territories              << " Territories\n";
     cout << "\t      "         << currentPlayer->armies                   << " Armies\n";
     cout << "\tLevel "         << currentPlayer->armySkill                << " Army Skill\n";
     cout << "\tLevel "         << currentPlayer->armyEndurance            << " Army Endurance\n";
     cout << "\tLevel "         << currentPlayer->weaponComplexity         << " Weapon Complexity\n";
-    cout << "\t      "         << currentPlayer->passiveIncome * 50 + 100 << " Dollars in passive income\n";
-    cout << "\t      "         << currentPlayer->money                    << " Dollars\n\n\n";
+    cout << "\t     $"         << passiveIncome                           << " Dollars in passive income\n";
+    cout << "\t     $"         << money                                   << " Dollars\n\n\n";
 }
 
 //Weapon Failure
 void weaponFailure(Player *currentPlayer){
-    int weaponFail = battleRoll(20) + 1 * currentPlayer->weaponComplexity;
+    int weaponFail =  battleRoll(20) + 1 * currentPlayer->weaponComplexity;
     if ((weaponFail - currentPlayer->armySkill) <= 5){
         cout << currentPlayer->name << ", your weapons failed during battle!\n";
         switch (rand()%3 + 1){
@@ -313,20 +338,20 @@ void hasLost(){
     }
 
     if (p1.money <= 0){
-        cout << p1.name << " has been conquered by " << p2.name << "!\n\n";
+        cout << p1.name << " has been devastated by " << p2.name << "!\n\n";
         exit(0);
     }
     else if (p1.territories <= 0){
-        cout << p1.name << " has been devastated by " << p2.name << "!\n\n";
+        cout << p1.name << " has been conquered by " << p2.name << "!\n\n";
         exit(0);
     }
     
     if (p2.money <= 0){
-        cout << p2.name << " has been conquered by " << p1.name << "!\n\n";
+        cout << p2.name << " has been devastated by " << p1.name << "!\n\n";
         exit(0);
     }
     else if (p2.territories <= 0){
-        cout << p2.name << " has been devastated by " << p1.name << "!\n\n";
+        cout << p2.name << " has been conquered by " << p1.name << "!\n\n";
         exit(0);
     }
 }
