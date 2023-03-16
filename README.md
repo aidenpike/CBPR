@@ -7,22 +7,25 @@ Numbers after the decimal are minor or bug fixes (e.g. 0.1)
 ## Version 0.0
 Complete! From here, I will list off bugs and updates, including things listed on the to do list below.
 ## Version 0.1
-In the works! Will be working on color to text, money tags, disallowing the player to buy upgrades beyond the base price, and bug fixes.
+Complete!
 - Added money tags
 - Added comma seperation for nums above 999
 - Added disallowing player to buy upgrades beyond base price
+- Fixed commander stats remaining the same as previous battle
+- Fixed weapon complexity saying not enough money when there's enough money
+- Added SOME color to text (may be more later, also note that this color currently only works in ANSI)
+- Added current prices next to each technology in the tree
+- Fixed integer inputs not being able to take non-integer inputs
+- Added looping the player's turn until they input an appropriate number
 
 ### To Do
 - Setup check for weapon complexity level -3 to absolutely demolish you in battle
-- Add color to text
+- Add more color to text
 - Add startup menu
 - Find a way to put names in commander fights OR alternatively have player name their cmdr
 - Balance the stats like a lot oh my god
-- Make integer inputs non-integer capable
-- Loop the current player's turn until they input an appropriate number
 - Equipment for commander
 #### Bugs
-- Commander stats should not remain the same as previous battle
 
 # Ideas
  - choiceList() specific to what the player has
