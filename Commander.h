@@ -37,6 +37,10 @@ void cmdrChoiceList(){
     cout << "3. Forfeit\n";
 }
 
+int returnLevel(int player){
+    return (player == 1) ? cmdr1.cmdrLVL : cmdr2.cmdrLVL;
+}
+
 void cmdrStats(Commander *currentCmdr){
     cout << "[Current Commander Stats]\n";
     cout << "\tHP: "     << currentCmdr->cmdrHP  << "/" << currentCmdr->cmdrMHP  << endl;
@@ -45,58 +49,80 @@ void cmdrStats(Commander *currentCmdr){
     cout << "\tMorale: " << currentCmdr->cmdrMOR << endl;
 }
 
+void cmdrResetStats(Commander *currentCmdr){
+    currentCmdr->cmdrHP = currentCmdr->cmdrMHP;
+    currentCmdr->cmdrDEF = currentCmdr->cmdrMDEF;
+}
 //One Fight Cycle 
 void cmdrFight(Commander *currentCmdr, Commander *opposingCmdr){
-    int choice = 0;
-
+    char choice = '0';
+    bool loop = true;
+    
     if (currentCmdr->cmdrDEF < 0){
         currentCmdr->cmdrDEF = 0;
     }
+
+    while (loop){
+        cmdrStats(currentCmdr);
+        cmdrChoiceList();
+        std::cin >> choice;
     
-    cmdrStats(currentCmdr);
-    cmdrChoiceList();
-    std::cin >> choice;
-
-    switch (choice){
-        case 1:
-            cout << "This commander takes a swift strike at his opponent!\n";
-
-            if (rand()%20 + 1 < 20){
-                cout << "He hits!\n";
-                if (currentCmdr->cmdrDEF > 0){
-                    currentCmdr->cmdrDEF -= opposingCmdr->cmdrATK;
+        switch (choice){
+            case '1':
+                cout << "This commander takes a swift strike at his opponent!\n";
+    
+                if (rand()%20 + 1 < 10){
+                    cout << "He hits!\n";
+                    if (opposingCmdr->cmdrDEF > 0){
+                        opposingCmdr->cmdrDEF -= currentCmdr->cmdrATK;
+                    }
+                    else if (opposingCmdr->cmdrDEF <= 0){
+                        opposingCmdr->cmdrHP -= currentCmdr->cmdrATK;
+                    }
+                    
                 }
-                else if (currentCmdr->cmdrDEF <= 0){
-                    currentCmdr->cmdrHP -= opposingCmdr->cmdrATK;
+                else {
+                    cout << "He misses!\n";
                 }
-                
-            }
-            else {
-                cout << "He misses!\n";
-            }
-        break;
+                loop = false;
+            break;
+    
+            case '2':
+                if (currentCmdr->cmdrDEF < currentCmdr->cmdrMDEF){
+                    cout << "This commander repairs his armor!\n'";
+                    currentCmdr->cmdrDEF += (rand()%3 + 1) * currentCmdr->cmdrLVL;
+    
+                    if (currentCmdr->cmdrDEF > currentCmdr->cmdrMDEF){
+                        currentCmdr->cmdrDEF = currentCmdr->cmdrMDEF;
+                    }
+                }
+                else if (currentCmdr->cmdrDEF >= currentCmdr->cmdrMDEF){
+                    cout << "Armor already at max!\n";
+                    currentCmdr->cmdrDEF = currentCmdr->cmdrMDEF;
+                }
+                loop = false;
+            break;
+    
+            case '3':
+                cout << "This commander forfeits this skirmish!\n";
+                currentCmdr->cmdrHP = 0;
+                loop = false;
+            break;
 
-        case 2:
-            if (cmdr1.cmdrDEF < cmdr1.cmdrMDEF){
-                cout << "This commander repairs his armor!\n'";
-                currentCmdr->cmdrDEF += (rand()%3 + 1) * currentCmdr->cmdrLVL;
-            }
-            else if (cmdr1.cmdrDEF >= cmdr1.cmdrMDEF){
-                cout << "Armor already at max!";
-                currentCmdr->cmdrDEF = currentCmdr->cmdrMDEF;
-            }
-        break;
-
-        case 3:
-            cout << "This commander forfeits this skirmish!\n";
-            currentCmdr->cmdrHP = 0;
-        break;
+            default:
+                cout << "Invalid input!\n";
+                loop = true;
+            break;
+        }
     }
 }
 
 //Entire Fight Loop
 string cmdrBattle(){
     cout << "A fight between both commanders ensues!\n\n";
+
+    cmdrResetStats(&cmdr1);
+    cmdrResetStats(&cmdr2);
     
     while (cmdr1.cmdrHP > 0 || cmdr2.cmdrHP > 0){    
         cout << "Player 1, it's your move. What do you wish to do?\n";
