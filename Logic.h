@@ -1,13 +1,13 @@
+#include <iostream>
+
 #ifndef CBPR_LOGIC_H
 #define CBPR_LOGIC_H
-
 
 class Logic {
     public:
         class Player {
         public:
             Player();
-            static void retrieveNames(std::string, std::string);
 
             class PlayerTech {
                 PlayerTech();
@@ -23,6 +23,17 @@ class Logic {
             size_t playerArmies;
             size_t playerMoney;
         };
+
+        //Logic Functions
+        //Player
+        Logic(std::string, size_t, size_t, size_t);
+        static void retrieveNames(std::string, std::string);
+
+        Player playerOne, playerTwo;
+
+        //PlayerTech
+        Logic(size_t, size_t, size_t, size_t);
+
 };
 
 
