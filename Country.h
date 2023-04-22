@@ -4,7 +4,7 @@
 #include "Commander.h"
 
 using std::cout;
-using std::string; 
+using std::string;
 using std::cin;
 using std::endl;
 
@@ -15,7 +15,7 @@ struct Player {
     int armySkill = 0;
     int armyEndurance = 0;
     int weaponComplexity = 0;
-    int passiveIncome = 0; 
+    int passiveIncome = 0;
     int money = 49900;
     bool weaponFailure = false;
     int player = 0;
@@ -27,7 +27,7 @@ Player *currentPlayer;
 //Dice Roll
 int battleRoll(int dice){
     srand(int(time(0)));
-    
+
     return rand()%dice + 1;
 }
 
@@ -49,7 +49,7 @@ string commaSeperate(int num){
     auto src = std::to_string(num);
     auto dest = std::string();
     auto count = 3;
-    
+
     for(auto i = src.crbegin(); i != src.crend(); ++i) {
         if (count == 0)
         {
@@ -62,7 +62,7 @@ string commaSeperate(int num){
     }
     reverse(dest.begin(), dest.end());
 
-    return dest;   
+    return dest;
 }
 
 //Tech List
@@ -84,15 +84,15 @@ void techList(Player *currentPlayer){
 void listStats(Player *currentPlayer){
     string passiveIncome = commaSeperate(currentPlayer->passiveIncome * 50 + 100);
     string money = commaSeperate(currentPlayer->money);
-    
+
     cout << "It is currently " << currentPlayer->name << "'s turn. Here are their stats:\n";
     cout << "\t      \x1B[33m"         << currentPlayer->territories              << "\033[0m Territories\n"; //Yellow
-    cout << "\t      \x1B[30m"         << currentPlayer->armies                   << "\033[0m Armies\n"; //Light gray maybe 
+    cout << "\t      \x1B[30m"         << currentPlayer->armies                   << "\033[0m Armies\n"; //Light gray maybe
     cout << "\t\x1B[34mLevel "         << currentPlayer->armySkill                << "\033[0m Army Skill\n"; //Blue
-    cout << "\t\x1B[31mLevel "         << currentPlayer->armyEndurance            << "\033[0m Army Endurance\n"; //Red 
-    cout << "\t\x1B[35mLevel "         << currentPlayer->weaponComplexity         << "\033[0m Weapon Complexity\n"; //Purple 
+    cout << "\t\x1B[31mLevel "         << currentPlayer->armyEndurance            << "\033[0m Army Endurance\n"; //Red
+    cout << "\t\x1B[35mLevel "         << currentPlayer->weaponComplexity         << "\033[0m Weapon Complexity\n"; //Purple
     cout << "\t     \x1B[32m$"         << passiveIncome                           << "\033[0m Dollars in passive income\n"; //Green
-    cout << "\t     \x1B[32m$"         << money                                   << "\033[0m Dollars\n\n\n"; //Green 
+    cout << "\t     \x1B[32m$"         << money                                   << "\033[0m Dollars\n\n\n"; //Green
 }
 
 //Weapon Failure
@@ -101,16 +101,16 @@ void weaponFailure(Player *currentPlayer){
     if ((weaponFail - currentPlayer->armySkill) <= 5){
         cout << "\x1B[31m" << currentPlayer->name << ", your weapons failed during battle!\033[0m\n";
         switch (rand()%3 + 1){
-            case 1: 
+            case 1:
                 cout << "\x1B[33m" << currentPlayer->name << " loses this battle, and flees!\033[0m\n";
-                
+
                 (battleRoll(10) + currentPlayer->armyEndurance <= 5) ? currentPlayer->armies-- : currentPlayer->armies = currentPlayer->armies;
-                
+
                 currentPlayer->money -=  rand()%1000 + 500;
                 currentPlayer->weaponFailure = true;
             break;
 
-            case 2: 
+            case 2:
                 cout << "\x1B[32m" << currentPlayer->name << ", you escape by a thread!\033[0m\n";
                 currentPlayer->money -= rand()%1000 + 500;
                 currentPlayer->weaponFailure = true;
@@ -121,7 +121,7 @@ void weaponFailure(Player *currentPlayer){
                 currentPlayer->money -= rand()%2000 + 1300;
 
                 (battleRoll(10) + currentPlayer->armyEndurance <= 10) ? currentPlayer->armies -= 2 : currentPlayer->armies = currentPlayer->armies;
-                
+
                 currentPlayer->weaponComplexity--;
                 currentPlayer->weaponFailure = true;
         }
@@ -146,23 +146,23 @@ void expandTerritory(Player *currentPlayer){
 void upgradeTechnology(Player *currentPlayer){
     p1.player = 1;
     p2.player = 2;
-    
+
     int techPrice = 8000;
     char techBranch = ' ';
     bool loop = true;
-    
+
     while (loop){
         cout << "Which technology would you like to upgrade?\n";
         techList(currentPlayer);
         cin >> techBranch;
-    
+
         techBranch = toupper(techBranch);
 
         switch (techBranch){
-            case 'A': 
+            case 'A':
                 loop = false;
             break;
-            
+
             case 'B':
                 loop = false;
             break;
@@ -172,16 +172,16 @@ void upgradeTechnology(Player *currentPlayer){
             case 'D':
                 loop = false;
             break;
-            
+
             case 'E':
                 loop = false;
             break;
-           
+
             default:
                 cout << "Invalid input!\n";
                 loop = true;
         }
-    }    
+    }
     switch (techBranch){
         //Army Skill
         case 'A':
@@ -190,7 +190,7 @@ void upgradeTechnology(Player *currentPlayer){
             }
             else {
                 cout << "After a long day, your armies' training is done. It pays off an they gain one skill level!\n\n";
-                currentPlayer->armySkill++; 
+                currentPlayer->armySkill++;
                 currentPlayer->money -= techPrice + (800 * currentPlayer->armySkill);
             }
         break;
@@ -273,62 +273,62 @@ void battleInitiation(){
 
     p1.weaponFailure = false;
     p2.weaponFailure = false;
-    
+
     weaponFailure(&p1);
     weaponFailure(&p2);
-    
+
     switch (outcomeChoice){
         case 1:
             if (p1.weaponFailure && p2.weaponFailure){
                 cout << "It's a tie!\n\n";
-            
+
                 p1.money -= 5;
-                p2.money -= 5;    
+                p2.money -= 5;
                 p1.weaponFailure = false;
                 p2.weaponFailure = false;
                 cmdrFight = false;
             }
             else if (p1.weaponFailure){
                     cout << p2.name << " has devastated this territory.\n\n";
-                    
+
                     p1.territories--;
                     p1.money -= rand()%750 + 500;
             }
             else if (p2.weaponFailure){
                 cout << p1.name << " has devastated this territory.\n\n";
-                    
+
                 p2.territories--;
                 p2.money -= rand()%750 + 500;
             }
             else if (cmdrFight){
                 if (cmdrBattle() == "p1win"){
                    cout << p1.name << " has devastated this territory.\n\n";
-                    
+
                     p2.territories--;
                     p2.money -= rand()%750 + 500;
                 }
                 else {
                     cout << p2.name << " has devastated this territory.\n\n";
-                    
+
                     p1.territories--;
                     p1.money -= rand()%750 + 500;
                 }
             }
             else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
                 cout << p1.name << " has devastated this territory.\n\n";
-                
+
                 p2.territories--;
                 p2.money -= rand()%750 + 500;
             }
             else if (pOneATKRoll == pTwoATKRoll){
                 cout << "Both players' weapons fail, it's a tie!\n\n";
-                
+
                 p1.money -= 5;
                 p2.money -= 5;
             }
             else if (pOneATKRoll < pTwoATKRoll || p1.weaponFailure){
                 cout << p2.name << " has devastated this territory.\n\n";
-                
+
                 p1.territories--;
                 p1.money -= rand()%750 + 500;
             }
@@ -337,13 +337,13 @@ void battleInitiation(){
         case 2:
             if (p1.weaponFailure && p2.weaponFailure){
                 cout << "It's a tie!\n\n";
-                
+
                 p1.money -= 5;
                 p2.money -= 5;
             }
             else if (p1.weaponFailure){
                 cout << p2.name << " has conquered this territory.\n\n";
-               
+
                 p2.territories++;
                 p1.territories--;
                 p2.money += rand()%500 + 250;
@@ -351,7 +351,7 @@ void battleInitiation(){
             }
             else if (p2.weaponFailure){
                     cout << p1.name << " has conquered this territory.\n\n";
-                    
+
                     p1.territories++;
                     p2.territories--;
                     p1.money += rand()%500 + 250;
@@ -360,7 +360,7 @@ void battleInitiation(){
             else if (cmdrFight){
                 if (cmdrBattle() == "p1win"){
                     cout << p1.name << " has conquered this territory.\n\n";
-                    
+
                     p1.territories++;
                     p2.territories--;
                     p1.money += rand()%500 + 250;
@@ -368,7 +368,7 @@ void battleInitiation(){
                 }
                 else {
                     cout << p2.name << " has conquered this territory.\n\n";
-                   
+
                     p2.territories++;
                     p1.territories--;
                     p2.money += rand()%500 + 250;
@@ -377,7 +377,7 @@ void battleInitiation(){
             }
             else if (pOneATKRoll > pTwoATKRoll || p2.weaponFailure){
                 cout << p1.name << " has conquered this territory.\n\n";
-                
+
                 p1.territories++;
                 p2.territories--;
                 p1.money += rand()%500 + 250;
@@ -390,7 +390,7 @@ void battleInitiation(){
             }
             else if (pOneATKRoll < pTwoATKRoll || p1.weaponFailure){
                 cout << p2.name << " has conquered this territory.\n\n";
-               
+
                 p2.territories++;
                 p1.territories--;
                 p2.money += rand()%500 + 250;
@@ -408,7 +408,7 @@ void hasLost(){
         cout << "Both empires go down in flames. The war is a tie.\n\n";
         exit(0);
     }
-    
+
     if (p1.money <= 0 && p2.money <= 0){
         cout << "Both empires go down in flames. The war is a tie.\n\n";
         exit(0);
@@ -422,7 +422,7 @@ void hasLost(){
         cout << p1.name << " has been conquered by " << p2.name << "!\n\n";
         exit(0);
     }
-    
+
     if (p2.money <= 0){
         cout << p2.name << " has been devastated by " << p1.name << "!\n\n";
         exit(0);
@@ -435,15 +435,15 @@ void hasLost(){
 
 void playerTurn(Player *currentPlayer){
     hasLost();
-    
-    
+
+
     //Passive Income
     currentPlayer->money += 100 + (50 * currentPlayer->passiveIncome);
     //List stats for current player
     listStats(currentPlayer);
     char choice = '0';
     bool loopTurn = true;
-    
+
     while (loopTurn){
         cout << "What do you wish to do?" << endl;
         cout << "\t1. Grow Territory ($10,000)\n";
@@ -451,35 +451,35 @@ void playerTurn(Player *currentPlayer){
         cout << "\t3. Recruit Army ($8,000)\n";
         cout << "\t4. Attack\n";
         cout << "\t5. Pass\n\n";
-    
+
         cin >> choice;
-        
+
         switch (choice){
             case '1':
                 expandTerritory(currentPlayer);
                 loopTurn = false;
             break;
-                
+
             case '2':
-                upgradeTechnology(currentPlayer); 
+                upgradeTechnology(currentPlayer);
                 loopTurn = false;
             break;
-    
+
             case '3':
                 recruitArmy(currentPlayer);
                 loopTurn = false;
             break;
-    
-            case '4':            
+
+            case '4':
                 battleInitiation();
                 loopTurn = false;
-            break;  
+            break;
 
-            default: 
+            default:
                 cout << "Invalid input!\n";
                 cout << "It is still " << currentPlayer->name << "'s turn.\n'";
                 loopTurn = true;
             break;
         }
     }
-} 
+}
