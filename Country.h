@@ -157,30 +157,13 @@ void upgradeTechnology(Player *currentPlayer){
         cin >> techBranch;
 
         techBranch = toupper(techBranch);
-
-        switch (techBranch){
-            case 'A':
-                loop = false;
-            break;
-
-            case 'B':
-                loop = false;
-            break;
-            case 'C':
-                loop = false;
-            break;
-            case 'D':
-                loop = false;
-            break;
-
-            case 'E':
-                loop = false;
-            break;
-
-            default:
-                cout << "Invalid input!\n";
-                loop = true;
+        
+        string choices = "ABCDE"
+        bool isValidChoice = choices.find(techBranch) == string::npos;
+        if (!isValidChoice) {
+            cout << "Invalid input!\n";
         }
+        loop = isValidChoice;
     }
     switch (techBranch){
         //Army Skill
