@@ -1,41 +1,47 @@
 #include <iostream>
+#include "player_stats.hpp"
 
-#ifndef CBPR_LOGIC_H
-#define CBPR_LOGIC_H
+#ifndef CBPR_GAME_LOGIC_HPP
+#define CBPR_GAME_LOGIC_HPP
 
-class Logic {
+class game_logic {
     public:
-        //Reason for struct: These values are constantly being modified
-        struct Player {
-            std::string playerName;
-            size_t playerTerritories = 2;
-            size_t playerArmies = 10;
-            size_t playerMoney = 50'000;
-            size_t playerArmySkillLevel = 1;
-            size_t playerArmyEnduranceLevel = 1;
-            size_t playerWeaponComplexityLevel = 1;
-            size_t playerPassiveIncomeLevel = 1;
-        } playerOne, playerTwo;
-        //Logic constructor for distributing values of Player
-        Logic(size_t, size_t, size_t);
-        //Retrieve names method for putting into Logic constructor
-        void retrieveNames(){
-            std::string name;
-
-            std::cout << "Player One, enter your name: ";
-            std::cin >> name;
-            playerOne.playerName = name;
-
-            std::cout << "Player Two, enter your name: ";
-            std::cin >> name;
-            playerOne.playerName = name;
-        }
-
-        //Logic functions. Does all the math n stuff
-        void playerTurn(); //Runs all functions and dependency injects into the proper UI functions
-        size_t playerChoice(size_t); //Receives choice from UI and returns it for playerTurn()
-        size_t hasLost(); //Checks stats everytime its ran and returns the player number who has lost, or -1 by default
-        size_t returnDiceRoll(size_t, size_t); //Uses mersenne twister engine, takes amount of sides and amount of dice then returns sum of dice
+        void name_entry();
+        void stat_rundown();
 };
 
-#endif //CBPR_LOGIC_H
+//Gets all player names
+void game_logic::name_entry() {
+    player_stats player_stats;
+    size_t player_count = 0;
+    std::string player_input = "";
+
+    std::cout << "Enter amount of players: ";
+    std::cin >> player_count;
+    
+    for (int x = 0; x < player_count; x++){
+        std::cout << "Player " << x + 1 << ", enter your name: ";
+        std::cin >> player_input;
+        
+        player_stats.names[x] = player_input;
+    }
+}
+
+//Debug: Lists all stats
+void game_logic::stat_rundown(){
+    player_stats player_stats;
+    std::string stat_type[5] = {"Territories: ", "Armies: ", "Money: $", "Army Skill Level: ", "Passive Income Level: "};
+    
+    player_stats.assign_values();
+    
+    for (int x = 0; x < 2; x++){
+        std::cout << "Player " << x + 1 << "'s stats\n";
+        for (int y = 0; y < 5; y++){
+            std::cout << stat_type[y];
+            std::cout << player_stats.stat_table[x][y] << "\n";
+        }
+        std::cout << "\n";
+    }
+}
+
+#endif //CBPR_GAME_LOGIC_CPP
