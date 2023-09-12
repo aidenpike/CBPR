@@ -1,19 +1,11 @@
-#include <iostream>
-#include "Country.h"
-
-using namespace std;
+#include <iostream> 
+#include "game_logic.hpp"
 
 int main(){
-    Player *currentPlayer;
+    game_logic game_logic;
+    player_stats player_stats;
 
-    getNames(&p1);
-    getNames(&p2);
-
-    while (true) {
-        //Player One Turn
-        playerTurn(&p1);
-
-        //Player Two Turn
-        playerTurn(&p2);
-    }
+    player_stats.assign_values();
+    game_logic.stat_rundown();
+    
 }
