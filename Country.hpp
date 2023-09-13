@@ -7,8 +7,7 @@ class player_stats {
         player_stats(); //Setter
         //Maybe vector later?? 2 players for now
         int stat_table[2][5];
-        std::string names[2];
-        int return_values(int);
+        int return_values(int, int);
         void assign_values();
         void test_output();
 
@@ -22,15 +21,6 @@ class player_stats {
         int army_skill_level;
         int passive_income_level;
 };
-//Setter
-player_stats::player_stats(){
-    territory_count = 2;
-    army_count = 5;
-    money = 50'000;
-    army_skill_level = 0;
-    passive_income_level = 0;    
-}
-
 void player_stats::assign_values(){
     int base_stat_table[5] = {territory_count, army_count, money, army_skill_level, passive_income_level};
     
@@ -41,8 +31,24 @@ void player_stats::assign_values(){
     }    
 }
 
-void player_stats::test_output(){
+//Setter
+player_stats::player_stats(){
+    territory_count = 2;
+    army_count = 5;
+    money = 50'000;
+    army_skill_level = 0;
+    passive_income_level = 0;    
 
+    assign_values();
+}
+
+//Getter
+int player_stats::return_values(int turn_counter, int stat_type){
+    return stat_table[turn_counter][stat_type];
+}
+
+void player_stats::test_output(){
+    std::cout << stat_table[0][0] << "\n";
 }
 
 #endif //CBPR_PLAYER_STATS_HPP
