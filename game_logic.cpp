@@ -6,16 +6,22 @@
 
 class game_logic {
     public:
+        //Misc
         void assign_stats();
         void name_entry();
         void stat_rundown();
+        int price_calculator(int);
+        //Choices
+        int turn_choice();
         void expand_territory();
         void upgrade_technology();
         void recruit_army();
         void battle_initiation();
-
+        //Passives
         void passive_income();
-
+        void turn_counter_update();
+        std::string victor_status();
+        void check_non_zeroes();
     private:
         std::string pseudo_names[2]; //Not a regularly manipulated stat so I put it here
         int player_stats_malleable[2][5];
@@ -23,7 +29,6 @@ class game_logic {
 
 //I promise this will be the only global variable
 extern int turn_counter = 0;
-
 
 /*
 -----PREPROCESSED-----
@@ -44,7 +49,6 @@ void game_logic::assign_stats(){
 */
 //Gets all player names
 void game_logic::name_entry() {
-    player_stats player_stats;
     size_t player_count = 0;
     std::string player_input = "";
 
@@ -60,7 +64,6 @@ void game_logic::name_entry() {
 
 //Lists all stats
 void game_logic::stat_rundown(){
-    player_stats player_stats;
     std::string stat_type[5] = {"Territories: ", "Armies: ", "Money: $", "Army Skill Level: ", "Passive Income Level: "};
     
     for (int x = 0; x < 2; x++){
@@ -84,19 +87,46 @@ int will_of_tyche(){
 /*
 -----CHOICES-----  
 */
-void game_logic::expand_territory(){
-    player_stats player_stats;
+void choice_list(){
+    game_logic game_logic;
+    std::string choice_list[5] = {"Expand Territory [$10,000]", "Upgrade Technology", "Recruit Army [$8,000]", "Battle"};
+
+    for (int x = 0; x < 4; x++){
+        std::cout << "[" << x + 1 << "] ";
+        std::cout << choice_list[x] << "\n";
+    }
+}
+
+int game_logic::turn_choice(){
+    int player_choice; 
     
-    std::cout << pseudo_names[turn_counter] << " expands their territory! [-10,000]\n"; 
-    player_stats_malleable[turn_counter][0] += 1;
-    player_stats_malleable[turn_counter][2] -= 10'000;
+    std::cout << "It is your turn " << pseudo_names[turn_counter] << ". Here are your options:\n";
+
+    choice_list();
+
+    std::cout << "Choice: ";
+    std::cin >> player_choice;
+
+    return player_choice;
+}
+
+void game_logic::expand_territory(){    
+    if (player_stats_malleable[turn_counter][2] - 10'000 < 0){
+        std::cout << "Not enough money!\n";
+    }
+    else {
+        std::cout << pseudo_names[turn_counter] << " expands their territory! [-10,000]\n"; 
+        player_stats_malleable[turn_counter][0] += 1;
+        player_stats_malleable[turn_counter][2] -= 10'000;
+    }    
 }
 
 /*
 ---TECHNOLOGY---
 */
 void tech_list(){
-    std::string tech_list[2] = {"Army Skill", "Passive Income Level"};
+    //TO-DO: Have math for level price scaling
+    std::string tech_list[2] = {"Army Skill [$8,000]", "Passive Income Level [$8,000]"};
     
     for (int x = 0; x < 2; x++){
         std::cout << "[" << x + 1 << "] ";
@@ -105,18 +135,22 @@ void tech_list(){
 }
 void game_logic::upgrade_technology(){
     int technology_index;
+    int price_scaling = 8'000 * (.5 * player_stats_malleable[turn_counter][technology_index + 2]);
     
     std::cout << pseudo_names[turn_counter] << ", what technology would you like to upgrade?\n";
     tech_list();
     std::cin >> technology_index;
-
-    player_stats_malleable[turn_counter][technology_index + 2] += 1;
-    player_stats_malleable[turn_counter][2] -= 8'000 * (.5 * player_stats_malleable[turn_counter][technology_index + 2]);
+    
+    if (player_stats_malleable[turn_counter][2] - price_scaling < 0){
+       std::cout << "Not enough money!\n"; 
+    }
+    else {
+        player_stats_malleable[turn_counter][technology_index + 2] += 1;
+        player_stats_malleable[turn_counter][2] -= price_scaling;
+    }
 }
 
 void game_logic::recruit_army(){
-    player_stats player_stats;
-
     if (player_stats_malleable[turn_counter][1] == player_stats_malleable[turn_counter][0]){
         std::cout << pseudo_names[turn_counter] << " recruits another army! [-8,000]\n"; 
         player_stats_malleable[turn_counter][1] += 1;
@@ -131,12 +165,11 @@ void game_logic::recruit_army(){
 }
 
 void game_logic::battle_initiation(){
-    player_stats player_stats;
     int player_one_boosts = .3 * player_stats_malleable[0][1] * player_stats_malleable[0][3];
     int player_two_boosts = .3 * player_stats_malleable[1][1] * player_stats_malleable[1][3];
     srand( time(NULL) );
-    int player_one_roll = will_of_tyche();
-    int player_two_roll = will_of_tyche();
+    int player_one_roll;
+    int player_two_roll;
     
     std::cout << "A skirmish commences!\n\n";
 
@@ -167,9 +200,45 @@ void game_logic::battle_initiation(){
 /*
 -----PASSIVES-----
 */
-
 void game_logic::passive_income(){
     int upgrade_addition = 1'000 * (.1 * player_stats_malleable[turn_counter][4]);
     player_stats_malleable[turn_counter][2] += 1'000 + upgrade_addition;
+}
+
+std::string game_logic::victor_status(){
+    //I lied on line 147
+    if (player_stats_malleable[0][0] <= 0 || player_stats_malleable[0][2] <= 0){
+        std::cout << pseudo_names[1] << " has won the war! Congratulations!\n";
+        return "player_two_win";
+    }
+    else if (player_stats_malleable[1][0] <= 0 || player_stats_malleable[1][2] <= 0){
+        std::cout << pseudo_names[1] << " has won the war! Congratulations!\n";
+        return "player_one_win";
+    }
+    else {
+        return "continue";
+    }
+}
+
+void game_logic::turn_counter_update(){
+    switch (turn_counter + 1){
+        case 1: 
+            turn_counter++;
+        break;
+        
+        case 2:
+            turn_counter--;
+        break;
+        
+        default:
+            std::cout << "Something is wrong.\n";
+        break;
+    }
+}
+
+void game_logic::check_non_zeroes(){
+    if (player_stats_malleable[turn_counter][1] < 0){
+        player_stats_malleable[turn_counter][1] = 0;
+    }
 }
 #endif //CBPR_GAME_LOGIC_CPP
