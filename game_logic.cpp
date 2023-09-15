@@ -14,6 +14,8 @@ class game_logic {
         void recruit_army();
         void battle_initiation();
 
+        void passive_income();
+
     private:
         std::string pseudo_names[2]; //Not a regularly manipulated stat so I put it here
         int player_stats_malleable[2][5];
@@ -161,4 +163,13 @@ void game_logic::battle_initiation(){
 
 }
 
+
+/*
+-----PASSIVES-----
+*/
+
+void game_logic::passive_income(){
+    int upgrade_addition = 1'000 * (.1 * player_stats_malleable[turn_counter][4]);
+    player_stats_malleable[turn_counter][2] += 1'000 + upgrade_addition;
+}
 #endif //CBPR_GAME_LOGIC_CPP
