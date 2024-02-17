@@ -17,8 +17,11 @@ namespace cbpr {
     void Country::alter_money(int value){
         m_money += value;
     }
-    bool Country::check_if_enough(int){
-        if
+    bool Country::check_if_enough(int price){
+        if (m_money > price){
+            return true;
+        }
+        return false;
     }
     void Country::increment_territories(){
         m_territories++;
@@ -104,5 +107,18 @@ namespace cbpr {
         std::cin >> choice;
 
         return choice;
+    }
+    void interpret_choice(char choice, Country &o_country, Technology &o_technology){
+        switch (toupper(choice)){
+            case 'A': //Territories
+                if (o_country.check_if_enough(10'000)){
+                    o_country.increment_territories();
+                }
+            break;
+
+            case 'B': //Technology
+                //list_technology_choices()
+            break;
+        }
     }
 }; //namespace cbpr
