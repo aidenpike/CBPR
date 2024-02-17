@@ -16,10 +16,15 @@ int main(){
     cbpr::Country o_player_two(get_name(), default_money, default_territories, default_armies);
     cbpr::Technology o_player_two_tech(default_tech_level, default_tech_level);
     
-    std::make_pair(o_player_one, o_player_two);
-    std::make_pair(o_player_one_tech, o_player_two_tech);
+    std::pair<cbpr::Country, cbpr::Country> players = std::make_pair(o_player_one, o_player_two);
+    std::pair<cbpr::Technology, cbpr::Technology> technologies = std::make_pair(o_player_one_tech, o_player_two_tech);
 
-    std::cout << "fard";
+    for (int i = 0; i < 10; i++){
+         technologies.first.increment_army_skill(players.first);
+    }
+
+    std::cout << technologies.first.get_army_skill() << "\n";
+    std::cout << players.first.get_money();
     return 0;    
 }
 
