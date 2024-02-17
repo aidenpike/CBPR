@@ -3,6 +3,9 @@
 #include <random>
 
 namespace cbpr {
+    /*
+    -----COUNTRY-----
+    */
     Country::Country(){}
     Country::Country(std::string name, int money, int territories, int armies){
         m_name = name;
@@ -13,6 +16,9 @@ namespace cbpr {
 
     void Country::alter_money(int value){
         m_money += value;
+    }
+    bool Country::check_if_enough(int){
+        if
     }
     void Country::increment_territories(){
         m_territories++;
@@ -43,6 +49,9 @@ namespace cbpr {
         return m_armies;
     }
 
+    /*
+    -----TECHNOLOGY-----
+    */
     Technology::Technology(int army_skill, int passive_income){
         m_army_skill = army_skill;
         m_passive_income = passive_income;
@@ -57,7 +66,7 @@ namespace cbpr {
         o_country.alter_money(-3'000 - (10 * m_passive_income));
     }
     void Technology::apply_passive_income(Country &o_country){
-        o_country.alter_money(m_passive_income);
+        o_country.alter_money(10 * m_passive_income);
     }
 
     int Technology::get_army_skill(){
@@ -67,4 +76,33 @@ namespace cbpr {
         return m_passive_income;
     }
 
+    /*
+    -----COMMANDER-----
+    */
+    //Commander stuff...
+
+    /*
+    -----INTERFACE-----
+    */
+    void Interface::list_stats(Country &o_country, Technology &o_technology){
+        std::cout << "$" << o_country.get_money() << "\n";
+        std::cout << o_country.get_territories() << "Territories\n";
+        std::cout << o_country.get_armies() << " Armies\n";
+        std::cout << "----------\n";
+        std::cout << "Level " << o_technology.get_army_skill() << " Army Skill\n";
+        std::cout << "Level " << o_technology.get_passive_income() << "Passive Income (+$" << 10 * o_technology.get_passive_income() << ") per turn"; 
+    }
+    void Interface::list_choices(){
+        std::cout << "[A] Expand\n";
+        std::cout << "[B] Upgrade Tech\n";
+        std::cout << "[C] Recruit\n";
+        std::cout << "[D] Attack\n";
+    }
+    char Interface::get_choice(){
+        char choice;
+
+        std::cin >> choice;
+
+        return choice;
+    }
 }; //namespace cbpr
