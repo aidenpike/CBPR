@@ -14,6 +14,11 @@ namespace cbpr {
             void increment_armies();
             int return_random_int(int, int);
             void initiate_attack();
+
+            //Getters
+            int get_money();
+            int get_territories();
+            int get_armies();
         private:
             std::string m_name;
             int m_money;
@@ -25,9 +30,13 @@ namespace cbpr {
             //Constructor, Behaviors
             Technology(int, int); //Army Skill, Passive Income
             
-            void increment_army_skill();
-            void increment_passive_income();
-            void apply_passive_income();
+            void increment_army_skill(Country &);
+            void increment_passive_income(Country &);
+            void apply_passive_income(Country &);
+
+            //Getters
+            int get_army_skill();
+            int get_passive_income();
         private:
             //Attributes
             int m_army_skill;
