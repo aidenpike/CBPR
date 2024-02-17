@@ -60,7 +60,7 @@ namespace cbpr {
             void list_stats(Country &, Technology &); //Lists all stats based on the given objects
             void list_choices(); //Lists all game choices
             char get_choice(); //Gets and returns the current player's choice
-            void interpret_choice(char); //Runs the proper function based on get_choice()
+            void interpret_choice(char, Country &, Technology &); //Runs the proper function based on get_choice()
     };
 }; //namespace cbpr
 #endif //COUNTRY_HPP
