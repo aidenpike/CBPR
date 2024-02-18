@@ -101,6 +101,10 @@ namespace cbpr {
         std::cout << "[C] Recruit\n";
         std::cout << "[D] Attack\n";
     }
+    void Interface::list_technology_choices(){
+        std::cout << "[A] Army Skill\n";
+        std::cout << "[B] Passive Income\n";
+    }
     char Interface::get_choice(){
         char choice;
 
@@ -108,16 +112,46 @@ namespace cbpr {
 
         return choice;
     }
-    void interpret_choice(char choice, Country &o_country, Technology &o_technology){
-        switch (toupper(choice)){
+    void interpret_choice(Country &o_country, Technology &o_technology){
+        Interface o_interface;
+
+        switch (toupper(o_interface.get_choice())){
             case 'A': //Territories
                 if (o_country.check_if_enough(10'000)){
                     o_country.increment_territories();
                 }
+                std::cout << "Not enough money!\n";
             break;
 
             case 'B': //Technology
-                //list_technology_choices()
+                o_interface.list_technology_choices();
+
+                switch (toupper(o_interface.get_choice())){
+                    case 'A':
+                        if (o_country.check_if_enough(-1'000 - (10 * o_technology.get_army_skill()))){
+                            o_technology.increment_army_skill(o_country);
+                        }
+                        std::cout << "Not enough money!\n";
+                    break;
+                    
+                    case 'B':
+                        if (o_country.check_if_enough(-3'000 - (10 * o_technology.get_passive_income()))){
+                            o_technology.increment_passive_income(o_country);
+                        }
+                        std::cout << "Not enough money!\n";
+                    break;
+                }
+            break;
+
+            case 'C':
+                if (o_country.check_if_enough(8'000)){
+                    o_country.increment_armies();
+                }
+                std::cout << "Not enough money!\n";
+            break;
+
+            default:
+                std::cout << "Invalid input!\n";
             break;
         }
     }
