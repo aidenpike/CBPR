@@ -1,6 +1,5 @@
 # CBPR
-CBPR is a mimic 4X game between 2 players (currently) where the goal is to exhaust the other player in some way (e.g. money, territories, etc). It’s strategy-based, with a lot of luck within the choices. 
-The name stands for “Country Battle Plus Remastered”, which is a bit of a mouthful, but its name has a point, as it’s a remastered version of an extension of a school project called “Country Battle”. I’ll likely change the name given that I actually finish the project. 
+Built off of [Country Battle](https://github.com/aidenpike/schoolprojects/tree/main/Country%20Battle) and then [Country Battle+](https://github.com/aidenpike/country-battle-plus), [Country Battle Plus Remastered](https://github.com/aidenpike/CBPR) is a text-based mimic 4X game between 2 players where the goal is to exhaust the other player in some way (e.g. money, territories, etc).
 
 # Versions
 Numbers before the decimal are major (e.g. 1.0).
