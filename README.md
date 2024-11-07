@@ -1,6 +1,9 @@
 # CBPR
 Built off of [Country Battle](https://github.com/aidenpike/schoolprojects/tree/main/Country%20Battle) and then [Country Battle+](https://github.com/aidenpike/country-battle-plus), [Country Battle Plus Remastered](https://github.com/aidenpike/CBPR) is a text-based mimic 4X game between 2 players where the goal is to exhaust the other player in some way (e.g. money, territories, etc).
 
+## Why so Many Extensions?
+I usually add an extension to the prior name when I rewrite or reformat the code entirely.
+
 # Versions
 Numbers before the decimal are major (e.g. 1.0).
 Numbers after the decimal are minor or bug fixes (e.g. 0.1)
